@@ -1,0 +1,39 @@
+:root {
+    --background: #EAEEF1;
+    --background-dark: #2F3136;
+    --main-color: #FF820C;
+    --dark-main: #FF7B51;
+    --text: #101010;
+    --dark-text: #FAFAFA;
+    --red: #E23A47;
+}
+::-webkit-scrollbar { width: 0;}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --var-bgcolor: #333;
+        --var-fontcolor: #eee;
+    }
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.wrapper {
+     width: 90%;
+     max-width: 1170px;
+     margin: 0 auto;
+ }
+.body {
+    background: var(--background);
+    transition: all .5s ease-out;
+}
+.dark{
+    background: var(--background-dark);
+}
+.v-text-field .v-input__details {
+    -webkit-padding-start: 0px;
+    padding-inline-start: 0px;
+    -webkit-padding-end: 0px;
+    padding-inline-end: 0px;
+}

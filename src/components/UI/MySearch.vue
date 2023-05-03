@@ -1,0 +1,96 @@
+<template>
+    <v-combobox
+        :items="mySearch"
+        label="Введите номер группы, кабинет или преподавателя"
+        variant="solo"
+        item-value="id"
+        clearable
+        v-model="$store.state.searchQyery"
+    ></v-combobox>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  name: "StudentView",
+  data: () => ({
+    mySearch: '',
+      'api': 'https://jaronimo.pythonanywhere.com/api/lessonlist/',
+  }),
+  methods: {
+    getTeachers() {
+      axios.get(this.api + 'teacher').then(
+          response => {
+            this.mySearch = response.data.map(item => item.last_name + ' ' + item.first_name + ' ' + item.middle_name);
+          }
+      ).catch(error => {
+        console.log(error)
+      })
+    },
+    getGroups() {
+      axios.get(this.api + 'group').then(
+          response => {
+            let groups = response.data.map(item => item.group_name);
+            for (let group of groups) {
+              this.mySearch.push(group);
+            }
+          }
+      ).catch(error => {
+        console.log(error)
+      })
+    },
+    getCabinets() {
+      axios.get(this.api + 'cabinet').then(
+          response => {
+            let cabinets = response.data.map(item => item.cabinet_name);
+            for (let cabinet of cabinets) {
+              this.mySearch.push(cabinet);
+            }
+          }
+      ).catch(error => {
+        console.log(error)
+      })
+    },
+  },
+  created() {
+    this.getTeachers();
+    this.getGroups();
+    this.getCabinets();
+  }
+}
+</script>
+
+<style>
+.v-menu {
+  border-radius: 200px;
+}
+.v-input__control {
+  height: 70px;
+}
+.v-field__input {
+  font-size: 21px;
+}
+.dark .v-field.v-field {
+  color: #FAFAFA;
+}
+.v-field--variant-solo {
+  background: transparent;
+  border: 1px solid #727272;
+  box-shadow: none;
+}
+/*цвет полей*/
+.v-theme--light {
+  background: transparent;
+  border-radius: 20px;
+}
+.dark .v-theme--light {
+  --v-theme-surface: 32,34,37;
+  color: #F6F6F6;
+  border-radius: 20px;
+  --v-theme-on-surface-variant: 66, 70, 77;
+}
+.v-locale--is-ltr.v-menu>div{
+  border-radius: 20px;
+}
+</style>

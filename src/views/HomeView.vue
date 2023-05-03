@@ -1,18 +1,27 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="wrapper">
+  <my-search></my-search>
+    <button-week></button-week>
+    <button-day></button-day>
+  <my-ticket></my-ticket>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { defineComponent } from 'vue';
+import mySearch from "@/components/UI/MySearch";
+import myTicket from "@/components/UI/MyTicket";
+import ButtonWeek from "@/components/UI/ButtonWeek";
+import ButtonDay from "@/components/UI/ButtonDay";
 
-export default {
+export default defineComponent({
   name: 'HomeView',
+
   components: {
-    HelloWorld
-  }
-}
+    mySearch,
+    myTicket,
+    ButtonWeek,
+    ButtonDay
+  },
+});
 </script>
