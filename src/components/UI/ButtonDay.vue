@@ -22,6 +22,9 @@
 </template>
 
 <script>
+
+import {formatISO} from "date-fns";
+
 export default {
   name: "ButtonDay",
   data: () => ({
@@ -34,22 +37,22 @@ export default {
   methods: {
     daySearch(e) {
       if (e == this.$store.state.mon.getDay()) {
-        let day = this.$store.state.mon.toISOString().substr(0, 10)
+        let day = formatISO(this.$store.state.mon, { representation: 'date' })
         this.$store.state.transfers = day
       } else if (e == this.$store.state.tue.getDay()) {
-        let day = this.$store.state.tue.toISOString().substr(0, 10)
+        let day = formatISO(this.$store.state.tue, { representation: 'date' })
         this.$store.state.transfers = day
       } else if (e == this.$store.state.wed.getDay()) {
-        let day = this.$store.state.wed.toISOString().substr(0, 10)
+        let day = formatISO(this.$store.state.wed, { representation: 'date' })
         this.$store.state.transfers = day
       } else if (e == this.$store.state.thu.getDay()) {
-        let day = this.$store.state.thu.toISOString().substr(0, 10)
+        let day = formatISO(this.$store.state.thu, { representation: 'date' })
         this.$store.state.transfers = day
       } else if (e == this.$store.state.fri.getDay()) {
-        let day = this.$store.state.fri.toISOString().substr(0, 10)
+        let day = formatISO(this.$store.state.fri, { representation: 'date' })
         this.$store.state.transfers = day
       } else if (e == this.$store.state.sat.getDay()) {
-        let day = this.$store.state.sat.toISOString().substr(0, 10)
+        let day = formatISO(this.$store.state.sat, { representation: 'date' })
         this.$store.state.transfers = day
       }
     },

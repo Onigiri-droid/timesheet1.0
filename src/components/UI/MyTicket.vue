@@ -14,7 +14,6 @@
       <v-col cols="2" class="ticket-group">{{ ticket.group.group_name }}</v-col>
       <v-col cols="1" class="ticket-group">{{ ticket.subgroup.subgroups_name }}</v-col>
       <v-col cols="1" class="ticket-cabinet">{{ ticket.cabinet.cabinet_name }}</v-col>
-      <v-col cols="1" class="ticket-date">{{ ticket.date }}</v-col>
     </v-row>
   </div>
 </template>
