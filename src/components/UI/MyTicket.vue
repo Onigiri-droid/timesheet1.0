@@ -1,18 +1,20 @@
 <template>
   <div v-for="ticket in lesson" :key="ticket">
-      <v-row class="ticket" v-if="(($store.state.searchQyery === (ticket.teacher.last_name + ' ' + ticket.teacher.first_name + ' ' + ticket.teacher.middle_name) && (ticket.date === $store.state.transfers)) || (($store.state.searchQyery === ticket.group.group_name) && (ticket.date === $store.state.transfers)) || (($store.state.searchQyery === ticket.cabinet.cabinet_name) && (ticket.date === $store.state.transfers)))">
-        <v-col class="ticket-number">
-          <div class="ticket-time">{{ ticket.number.starttimelesson.substr(0, 5) }}
-            {{ ticket.number.endtimelesson.substr(0, 5) }}
-          </div>
-          <div class="ticket-number-num">{{ ticket.number.numberlesson_name }}</div>
-        </v-col>
-        <v-col class="ticket-theme">{{ ticket.theme.theme_name }}</v-col>
-        <v-col cols="4" class="ticket-teacher">{{ ticket.teacher.last_name }} {{ ticket.teacher.first_name }} {{ ticket.teacher.middle_name }}</v-col>
-        <v-col cols="2" class="ticket-group">{{ ticket.group.group_name }}</v-col>
-        <v-col cols="1" class="ticket-group">{{ ticket.subgroup.subgroups_name }}</v-col>
-        <v-col cols="1" class="ticket-cabinet">{{ ticket.cabinet.cabinet_name }}</v-col>
-      </v-row>
+    <v-row class="ticket" v-if="($store.state.searchQyery === ((ticket.date === $store.state.transfers) && ((ticket.teacher.last_name + ' ' + ticket.teacher.first_name + ' ' + ticket.teacher.middle_name) || ($store.state.searchQyery === ticket.group.group_name) || ($store.state.searchQyery === ticket.cabinet.cabinet_name))))">
+      <v-col class="ticket-number">
+        <div class="ticket-time">{{ ticket.number.starttimelesson.substr(0, 5) }}
+          {{ ticket.number.endtimelesson.substr(0, 5) }}
+        </div>
+        <div class="ticket-number-num">{{ ticket.number.numberlesson_name }}</div>
+      </v-col>
+      <v-col class="ticket-theme">{{ ticket.theme.theme_name }}</v-col>
+      <v-col cols="4" class="ticket-teacher">{{ ticket.teacher.last_name }} {{ ticket.teacher.first_name }}
+        {{ ticket.teacher.middle_name }}
+      </v-col>
+      <v-col cols="2" class="ticket-group">{{ ticket.group.group_name }}</v-col>
+      <v-col cols="1" class="ticket-group">{{ ticket.subgroup.subgroups_name }}</v-col>
+      <v-col cols="1" class="ticket-cabinet">{{ ticket.cabinet.cabinet_name }}</v-col>
+    </v-row>
   </div>
 </template>
 
