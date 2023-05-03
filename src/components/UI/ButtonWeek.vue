@@ -205,7 +205,6 @@ export default {
         this.nextWeek()
       } else if (e === 'c'){
         this.currentWeek()
-
       }
     },
     dayTransfer() {
