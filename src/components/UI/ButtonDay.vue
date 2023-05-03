@@ -22,8 +22,6 @@
 </template>
 
 <script>
-
-
 export default {
   name: "ButtonDay",
   data: () => ({

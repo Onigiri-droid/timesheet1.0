@@ -38,7 +38,6 @@ export default {
       })
     },
   },
-  computed: {},
   created() {
     this.getTeachers()
   }

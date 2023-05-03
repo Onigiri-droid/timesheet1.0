@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
-  <my-search></my-search>
+    <my-search></my-search>
     <button-week></button-week>
     <button-day></button-day>
-  <my-ticket></my-ticket>
+    <my-ticket></my-ticket>
   </div>
 </template>
 

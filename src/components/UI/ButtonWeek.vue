@@ -198,14 +198,11 @@ export default {
         this.dayTransfer()
       }
     },
-
     dayToday(e) {
       if (e === 'p') {
         this.previousWeek()
-
       } else if (e === 'f') {
         this.nextWeek()
-
       } else if (e === 'c'){
         this.currentWeek()
 
