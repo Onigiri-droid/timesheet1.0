@@ -35,32 +35,32 @@ export default {
     transfer: '',
   }),
   methods: {
-    daySearch(e) {
-      if (e == this.$store.state.mon.getDay()) {
-        let day = formatISO(this.$store.state.mon, { representation: 'date' })
-        this.$store.state.transfers = day
-      } else if (e == this.$store.state.tue.getDay()) {
-        let day = formatISO(this.$store.state.tue, { representation: 'date' })
-        this.$store.state.transfers = day
-      } else if (e == this.$store.state.wed.getDay()) {
-        let day = formatISO(this.$store.state.wed, { representation: 'date' })
-        this.$store.state.transfers = day
-      } else if (e == this.$store.state.thu.getDay()) {
-        let day = formatISO(this.$store.state.thu, { representation: 'date' })
-        this.$store.state.transfers = day
-      } else if (e == this.$store.state.fri.getDay()) {
-        let day = formatISO(this.$store.state.fri, { representation: 'date' })
-        this.$store.state.transfers = day
-      } else if (e == this.$store.state.sat.getDay()) {
-        let day = formatISO(this.$store.state.sat, { representation: 'date' })
-        this.$store.state.transfers = day
-      }
+      daySearch(e){
+        if (e == this.$store.state.mon.getDay()) {
+          let day = formatISO(this.$store.state.mon, { representation: 'date' })
+          this.$store.state.transfers = day
+        } else if (e == this.$store.state.tue.getDay()) {
+          let day = formatISO(this.$store.state.tue, { representation: 'date' })
+          this.$store.state.transfers = day
+        } else if (e == this.$store.state.wed.getDay()) {
+          let day = formatISO(this.$store.state.wed, { representation: 'date' })
+          this.$store.state.transfers = day
+        } else if (e == this.$store.state.thu.getDay()) {
+          let day = formatISO(this.$store.state.thu, { representation: 'date' })
+          this.$store.state.transfers = day
+        } else if (e == this.$store.state.fri.getDay()) {
+          let day = formatISO(this.$store.state.fri, { representation: 'date' })
+          this.$store.state.transfers = day
+        } else if (e == this.$store.state.sat.getDay()) {
+          let day = formatISO(this.$store.state.sat, { representation: 'date' })
+          this.$store.state.transfers = day
+        }
     },
     dayActive() {
       let currentDay = document.querySelectorAll('input[name="days"]')
-      for (let aegrtokp of currentDay) {
-        if (aegrtokp.value == this.weekDay) {
-          aegrtokp.checked = true;
+      for (let dayC of currentDay) {
+        if (dayC.value == this.weekDay) {
+          dayC.checked = true;
         }
       }
     },
@@ -86,7 +86,7 @@ export default {
 }
 
 .radio-day {
-  padding: 12% 45%;
+  padding: 12% 40%;
 }
 
 .btn-day label {

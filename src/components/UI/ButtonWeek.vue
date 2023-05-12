@@ -1,19 +1,20 @@
 <template>
   <div class="btn-week">
     <input type="radio" id="radio-1" name="weeks" @click="dayToday('p')"/>
-    <label class="btn-12 past" for="radio-1">ПРОШЛАЯ</label>
+    <label class="radio-week past" for="radio-1">ПРОШЛАЯ</label>
 
-    <input type="radio" id="radio-2" name="weeks" @click="dayToday('c')" checked />
-    <label class="btn-12 current" for="radio-2">ТЕКУЩАЯ</label>
+    <input type="radio" id="radio-2" name="weeks" @click="dayToday('c')" checked/>
+    <label class="radio-week current" for="radio-2">ТЕКУЩАЯ</label>
 
     <input type="radio" id="radio-3" name="weeks" @click="dayToday('f')"/>
-    <label class="btn-12 future" for="radio-3">СЛЕДУЮЩАЯ</label>
+    <label class="radio-week future" for="radio-3">СЛЕДУЮЩАЯ</label>
     <div class="glider"></div>
   </div>
 </template>
 
 <script>
 import {
+  formatISO,
   isFriday,
   isMonday,
   isSaturday,
@@ -21,7 +22,8 @@ import {
   isTuesday,
   isWednesday,
   nextFriday,
-  nextMonday, nextSaturday,
+  nextMonday,
+  nextSaturday,
   nextThursday,
   nextTuesday,
   nextWednesday,
@@ -97,55 +99,55 @@ export default {
       }
     },
     nextWeek() {
-        if (isMonday(this.sad)) {
-          this.mon = nextMonday(nextMonday(this.sad))
-          this.tue = nextTuesday(nextTuesday(new Date()))
-          this.wed = nextWednesday(nextWednesday(new Date()))
-          this.thu = nextThursday(nextThursday(new Date()))
-          this.fri = nextFriday(nextFriday(new Date()))
-          this.sat = nextSaturday(nextSaturday(new Date()))
-          this.dayTransfer()
-        } else if (isTuesday(this.sad)) {
-          this.mon = nextMonday(new Date())
-          this.tue = nextTuesday(this.sad)
-          this.wed = nextWednesday(nextWednesday(new Date()))
-          this.thu = nextThursday(nextThursday(new Date()))
-          this.fri = nextFriday(nextFriday(new Date()))
-          this.sat = nextSaturday(nextSaturday(new Date()))
-          this.dayTransfer()
-        } else if (isWednesday(this.sad)) {
-          this.mon = nextMonday(new Date())
-          this.tue = nextTuesday(new Date())
-          this.wed = nextWednesday(this.sad)
-          this.thu = nextThursday(nextThursday(new Date()))
-          this.fri = nextFriday(nextFriday(new Date()))
-          this.sat = nextSaturday(nextSaturday(new Date()))
-          this.dayTransfer()
-        } else if (isThursday(this.sad)) {
-          this.mon = nextMonday(new Date())
-          this.tue = nextTuesday(new Date())
-          this.wed = nextWednesday(new Date())
-          this.thu = nextThursday(this.sad)
-          this.fri = nextFriday(nextFriday(new Date()))
-          this.sat = nextSaturday(nextSaturday(new Date()))
-          this.dayTransfer()
-        } else if (isFriday(this.sad)) {
-          this.mon = nextMonday(new Date())
-          this.tue = nextTuesday(new Date())
-          this.wed = nextWednesday(new Date())
-          this.thu = nextThursday(new Date())
-          this.fri = nextFriday(this.sad)
-          this.sat = nextSaturday(nextSaturday(new Date()))
-          this.dayTransfer()
-        } else if (isSaturday(this.sad)) {
-          this.mon = nextMonday(new Date())
-          this.tue = nextTuesday(new Date())
-          this.wed = nextWednesday(new Date())
-          this.thu = nextThursday(new Date())
-          this.fri = nextFriday(new Date())
-          this.sat = nextSaturday(this.sad)
-          this.dayTransfer()
-        }
+      if (isMonday(this.sad)) {
+        this.mon = nextMonday(nextMonday(this.sad))
+        this.tue = nextTuesday(nextTuesday(new Date()))
+        this.wed = nextWednesday(nextWednesday(new Date()))
+        this.thu = nextThursday(nextThursday(new Date()))
+        this.fri = nextFriday(nextFriday(new Date()))
+        this.sat = nextSaturday(nextSaturday(new Date()))
+        this.dayTransfer()
+      } else if (isTuesday(this.sad)) {
+        this.mon = nextMonday(new Date())
+        this.tue = nextTuesday(this.sad)
+        this.wed = nextWednesday(nextWednesday(new Date()))
+        this.thu = nextThursday(nextThursday(new Date()))
+        this.fri = nextFriday(nextFriday(new Date()))
+        this.sat = nextSaturday(nextSaturday(new Date()))
+        this.dayTransfer()
+      } else if (isWednesday(this.sad)) {
+        this.mon = nextMonday(new Date())
+        this.tue = nextTuesday(new Date())
+        this.wed = nextWednesday(this.sad)
+        this.thu = nextThursday(nextThursday(new Date()))
+        this.fri = nextFriday(nextFriday(new Date()))
+        this.sat = nextSaturday(nextSaturday(new Date()))
+        this.dayTransfer()
+      } else if (isThursday(this.sad)) {
+        this.mon = nextMonday(new Date())
+        this.tue = nextTuesday(new Date())
+        this.wed = nextWednesday(new Date())
+        this.thu = nextThursday(this.sad)
+        this.fri = nextFriday(nextFriday(new Date()))
+        this.sat = nextSaturday(nextSaturday(new Date()))
+        this.dayTransfer()
+      } else if (isFriday(this.sad)) {
+        this.mon = nextMonday(new Date())
+        this.tue = nextTuesday(new Date())
+        this.wed = nextWednesday(new Date())
+        this.thu = nextThursday(new Date())
+        this.fri = nextFriday(this.sad)
+        this.sat = nextSaturday(nextSaturday(new Date()))
+        this.dayTransfer()
+      } else if (isSaturday(this.sad)) {
+        this.mon = nextMonday(new Date())
+        this.tue = nextTuesday(new Date())
+        this.wed = nextWednesday(new Date())
+        this.thu = nextThursday(new Date())
+        this.fri = nextFriday(new Date())
+        this.sat = nextSaturday(this.sad)
+        this.dayTransfer()
+      }
     },
     currentWeek() {
       if (isMonday(this.sad)) {
@@ -198,13 +200,48 @@ export default {
         this.dayTransfer()
       }
     },
+    dayUpdate() {
+      let currentDay = document.querySelectorAll('input[name="days"]')
+      for (let dayC of currentDay) {
+        if (dayC.checked == true) {
+          if (dayC.value == this.$store.state.mon.getDay()) {
+            dayC.checked = true;
+            let day = formatISO(this.$store.state.mon, {representation: 'date'})
+            this.$store.state.transfers = day
+          } else if (dayC.value == this.$store.state.tue.getDay()) {
+            dayC.checked = true;
+            let day = formatISO(this.$store.state.tue, {representation: 'date'})
+            this.$store.state.transfers = day
+          } else if (dayC.value == this.$store.state.wed.getDay()) {
+            dayC.checked = true;
+            let day = formatISO(this.$store.state.wed, {representation: 'date'})
+            this.$store.state.transfers = day
+          } else if (dayC.value == this.$store.state.thu.getDay()) {
+            dayC.checked = true;
+            let day = formatISO(this.$store.state.thu, {representation: 'date'})
+            this.$store.state.transfers = day
+          } else if (dayC.value == this.$store.state.fri.getDay()) {
+            dayC.checked = true;
+            let day = formatISO(this.$store.state.fri, {representation: 'date'})
+            this.$store.state.transfers = day
+          } else if (dayC.value == this.$store.state.sat.getDay()) {
+            dayC.checked = true;
+            let day = formatISO(this.$store.state.sat, {representation: 'date'})
+            this.$store.state.transfers = day
+          }
+        }
+      }
+    },
     dayToday(e) {
       if (e === 'p') {
         this.previousWeek()
+        this.dayUpdate()
       } else if (e === 'f') {
         this.nextWeek()
-      } else if (e === 'c'){
+        this.dayUpdate()
+      } else if (e === 'c') {
         this.currentWeek()
+        this.dayUpdate()
       }
     },
     dayTransfer() {
@@ -234,15 +271,23 @@ export default {
   justify-items: center;
   transition: all .5s ease-out;
 }
+
+.radio-week {
+  padding: 12% 33.3%;
+}
+
 .btn-week label {
   cursor: pointer;
 }
+
 .past {
   grid-area: past;
 }
+
 .current {
   grid-area: current;
 }
+
 .future {
   grid-area: future;
 }

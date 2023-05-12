@@ -2,7 +2,8 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: () => ({
-    searchQyery:'',
+    searchQuery:'',
+    searchDates: '',
     transfers: '',
     mon: '',
     tue: '',
@@ -13,6 +14,16 @@ export default createStore({
     startFunc: '',
   }),
   getters: {
+    // mounted() {
+    //   if (localStorage.search) {
+    //     this.state.searchQuery = localStorage.search;
+    //   }
+    // },
+    // watch: {
+    //   $store.state.searchQuery(newName) {
+    //     localStorage.search = newName;
+    //   }
+    // }
   },
   mutations: {
   },

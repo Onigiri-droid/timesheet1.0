@@ -1,16 +1,12 @@
 <template>
   <div v-for="ticket in lesson" :key="ticket">
-    <v-row class="ticket" v-if="(($store.state.searchQyery === (ticket.teacher.last_name + ' ' + ticket.teacher.first_name + ' ' + ticket.teacher.middle_name) && (ticket.date === $store.state.transfers)) || (($store.state.searchQyery === ticket.group.group_name) && (ticket.date === $store.state.transfers)) || (($store.state.searchQyery === ticket.cabinet.cabinet_name) && (ticket.date === $store.state.transfers)))">
-    <v-col class="ticket-number">
-        <div class="ticket-time">{{ ticket.number.starttimelesson.substr(0, 5) }}
-          {{ ticket.number.endtimelesson.substr(0, 5) }}
-        </div>
-        <div class="ticket-number-num">{{ ticket.number.numberlesson_name }}</div>
+    <v-row class="ticket" v-if="(($store.state.searchQuery === (ticket.teacher.last_name + ' ' + ticket.teacher.first_name + ' ' + ticket.teacher.middle_name) && (ticket.date === $store.state.transfers)) || (($store.state.searchQuery === ticket.group.group_name) && (ticket.date === $store.state.transfers)) || (($store.state.searchQuery === ticket.cabinet.cabinet_name) && (ticket.date === $store.state.transfers)))">
+      <v-col class="ticket-number">
+        <div class="ticket-time">{{ ticket.number.starttimelesson.substr(0, 5) }} {{ ticket.number.endtimelesson.substr(0, 5) }}</div>
+        <div class="ticket-number-num"><div class="number-num">{{ ticket.number.numberlesson_name }}</div><div class="number-short">{{ ticket.number.short }}</div></div>
       </v-col>
       <v-col class="ticket-theme">{{ ticket.theme.theme_name }}</v-col>
-      <v-col cols="4" class="ticket-teacher">{{ ticket.teacher.last_name }} {{ ticket.teacher.first_name }}
-        {{ ticket.teacher.middle_name }}
-      </v-col>
+      <v-col cols="4" class="ticket-teacher">{{ ticket.teacher.last_name }} {{ ticket.teacher.first_name }} {{ ticket.teacher.middle_name }}</v-col>
       <v-col cols="2" class="ticket-group">{{ ticket.group.group_name }}</v-col>
       <v-col cols="1" class="ticket-group">{{ ticket.subgroup.subgroups_name }}</v-col>
       <v-col cols="1" class="ticket-cabinet">{{ ticket.cabinet.cabinet_name }}</v-col>
@@ -26,11 +22,11 @@ export default {
   components: {},
   data: () => ({
     lesson: '',
-    SessonSort: '',
     'api': 'https://jaronimo.pythonanywhere.com/api/lessonlist/',
+    lazy: 'Пар нет спим дальше'
   }),
   methods: {
-    getTeachers() {
+    async getTeachers() {
       axios.get(this.api).then(
           response => {
             this.lesson = response.data;
@@ -40,7 +36,7 @@ export default {
       })
     },
   },
-  created() {
+  mounted() {
     this.getTeachers()
   }
 }
@@ -90,7 +86,21 @@ export default {
 }
 
 .ticket-number-num {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.number-num {
   font-size: 32px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.number-short {
+  font-size: 20px;
 }
 
 .ticket-number {
@@ -102,7 +112,7 @@ export default {
   max-width: 90px;
   margin: 0 18px 0 0;
   padding: 0 12px;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .ticket-theme {

@@ -5,7 +5,7 @@
         variant="solo"
         item-value="id"
         clearable
-        v-model="$store.state.searchQyery"
+        v-model="this.$store.state.searchQuery"
     ></v-combobox>
 </template>
 
@@ -15,20 +15,21 @@ import axios from 'axios'
 export default {
   name: "StudentView",
   data: () => ({
-    mySearch: '',
+    mySearch: [],
       'api': 'https://jaronimo.pythonanywhere.com/api/lessonlist/',
   }),
   methods: {
-    getTeachers() {
+    async getTeachers() {
       axios.get(this.api + 'teacher').then(
           response => {
-            this.mySearch = response.data.map(item => item.last_name + ' ' + item.first_name + ' ' + item.middle_name);
+            let teacher = response.data.map(item => item.last_name + ' ' + item.first_name + ' ' + item.middle_name);
+            this.mySearch = teacher.sort()
           }
       ).catch(error => {
         console.log(error)
       })
     },
-    getGroups() {
+    async getGroups() {
       axios.get(this.api + 'group').then(
           response => {
             let groups = response.data.map(item => item.group_name);
@@ -40,7 +41,7 @@ export default {
         console.log(error)
       })
     },
-    getCabinets() {
+    async getCabinets() {
       axios.get(this.api + 'cabinet').then(
           response => {
             let cabinets = response.data.map(item => item.cabinet_name);
@@ -52,6 +53,16 @@ export default {
         console.log(error)
       })
     },
+  },
+  mounted() {
+    if (localStorage.search) {
+      this.$store.state.searchQuery = localStorage.search;
+    }
+  },
+  watch: {
+    '$store.state.searchQuery'(newName) {
+      localStorage.search = newName;
+    }
   },
   created() {
     this.getTeachers();
@@ -78,6 +89,7 @@ export default {
   background: transparent;
   border: 1px solid #727272;
   box-shadow: none;
+  transition: all .5s ease-out;
 }
 /*цвет полей*/
 .v-theme--light {
