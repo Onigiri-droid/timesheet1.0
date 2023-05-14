@@ -1,12 +1,5 @@
 <template>
-    <v-combobox
-        :items="mySearch"
-        label="Введите номер группы, кабинет или преподавателя"
-        variant="solo"
-        item-value="id"
-        clearable
-        v-model="this.$store.state.searchQuery"
-    ></v-combobox>
+    <v-combobox :items="mySearch" label="Введите номер группы, кабинет или преподавателя" variant="solo" item-value="id" clearable v-model="this.$store.state.searchQuery"></v-combobox>
 </template>
 
 <script>
@@ -106,3 +99,8 @@ export default {
   border-radius: 20px;
 }
 </style>
+
+<!--Использовать Promise.all() для параллельного выполнения запросов к API. Это может сократить время ожидания и ускорить загрузку данных.-->
+<!--Сохранять результаты запросов в кеше, чтобы не делать повторные запросы при повторном использовании приложения или при переходах между страницами.-->
+<!--Использовать async/await вместо .then() и .catch() для более читаемого и удобного кода.-->
+<!--Использовать map() вместо цикла for для более чистого и лаконичного кода.-->
