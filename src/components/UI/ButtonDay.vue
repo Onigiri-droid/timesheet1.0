@@ -22,7 +22,6 @@
 </template>
 
 <script>
-
 import {formatISO} from "date-fns";
 
 export default {
@@ -30,7 +29,6 @@ export default {
   data: () => ({
     days: '',
     'api': 'https://jaronimo.pythonanywhere.com/api/lessonlist/',
-    // дни недели
     weekDay: new Date().getDay(),
     transfer: '',
   }),

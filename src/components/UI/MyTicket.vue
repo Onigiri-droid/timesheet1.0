@@ -17,6 +17,7 @@
     <v-col cols="1" class="ticket-group">{{ ticket.subgroup.subgroups_name }}</v-col>
     <v-col cols="1" class="ticket-cabinet">{{ ticket.cabinet.cabinet_name }}</v-col>
   </v-row>
+  <v-row v-show="filteredLesson.length === 0">отдых</v-row>
 </template>
 
 <script>
@@ -57,7 +58,7 @@ export default {
   },
   mounted() {
     this.getLessons()
-  },
+  }
 }
 </script>
 

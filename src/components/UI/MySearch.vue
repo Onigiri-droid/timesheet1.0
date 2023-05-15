@@ -1,5 +1,5 @@
 <template>
-    <v-combobox :items="mySearch" label="Введите номер группы, кабинет или преподавателя" variant="solo" item-value="id" clearable v-model="this.$store.state.searchQuery"></v-combobox>
+  <v-combobox :items="mySearch" label="Введите номер группы, кабинет или преподавателя" variant="solo" item-value="id" clearable v-model="this.$store.state.searchQuery"></v-combobox>
 </template>
 
 <script>
@@ -9,58 +9,55 @@ export default {
   name: "StudentView",
   data: () => ({
     mySearch: [],
-      'api': 'https://jaronimo.pythonanywhere.com/api/lessonlist/',
+    'api': 'https://jaronimo.pythonanywhere.com/api/lessonlist/',
   }),
   methods: {
-    async getTeachers() {
-      axios.get(this.api + 'teacher').then(
-          response => {
-            let teacher = response.data.map(item => item.last_name + ' ' + item.first_name + ' ' + item.middle_name);
-            this.mySearch = teacher.sort()
-          }
-      ).catch(error => {
-        console.log(error)
-      })
+    handleError(error) {
+      console.log(error);
+    },
+    async fetchData(apiEndpoint, dataProcessor) {
+      try {
+        const response = await axios.get(this.api + apiEndpoint);
+        dataProcessor(response);
+      } catch (error) {
+        this.handleError(error);
+      }
     },
     async getGroups() {
-      axios.get(this.api + 'group').then(
-          response => {
-            let groups = response.data.map(item => item.group_name);
-            for (let group of groups) {
-              this.mySearch.push(group);
-            }
-          }
-      ).catch(error => {
-        console.log(error)
-      })
+      this.fetchData('group', response => {
+        let groups = response.data.map(item => item.group_name);
+        groups.forEach(group => this.mySearch.push(group));
+      });
+    },
+    async getTeachers() {
+      this.fetchData('teacher', response => {
+        let teacher = response.data.map(item => item.last_name + ' ' + item.first_name + ' ' + item.middle_name);
+        this.mySearch = teacher.sort();
+      });
     },
     async getCabinets() {
-      axios.get(this.api + 'cabinet').then(
-          response => {
-            let cabinets = response.data.map(item => item.cabinet_name);
-            for (let cabinet of cabinets) {
-              this.mySearch.push(cabinet);
-            }
-          }
-      ).catch(error => {
-        console.log(error)
-      })
+      this.fetchData('cabinet', response => {
+        let cabinets = response.data.map(item => item.cabinet_name);
+        cabinets.forEach(cabinet => this.mySearch.push(cabinet));
+      });
     },
   },
   mounted() {
-    if (localStorage.search) {
+    if (localStorage.search && localStorage.search !== 'null') {
       this.$store.state.searchQuery = localStorage.search;
     }
   },
   watch: {
     '$store.state.searchQuery'(newName) {
-      localStorage.search = newName;
+      if (newName !== null) {
+        localStorage.search = newName;
+      } else {
+        localStorage.removeItem('search');
+      }
     }
   },
-  created() {
-    this.getTeachers();
-    this.getGroups();
-    this.getCabinets();
+  async created() {
+    await Promise.all([this.getGroups(), this.getTeachers(), this.getCabinets()]);
   }
 }
 </script>

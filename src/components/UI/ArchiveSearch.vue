@@ -1,12 +1,5 @@
 <template>
-  <v-combobox
-      :items="myDates"
-      label="Введите дату"
-      variant="solo"
-      item-value="id"
-      clearable
-      v-model="$store.state.searchDates"
-  ></v-combobox>
+  <v-combobox :items="myDates" label="Введите дату" variant="solo" item-value="id" clearable v-model="$store.state.searchDates"></v-combobox>
 </template>
 
 <script>
@@ -15,7 +8,7 @@ import axios from "axios";
 export default {
   name: "ArchiveSearch",
   data: () => ({
-    myDates: '',
+    myDates: [],
     'api': 'https://jaronimo.pythonanywhere.com/api/lessonlist/',
   }),
   methods: {
@@ -30,12 +23,12 @@ export default {
       })
     }
   },
-  created() {
+  async created() {
     this.getDates();
   }
 }
 </script>
 
 <style scoped>
-
 </style>
+

@@ -11,7 +11,6 @@ export default createStore({
     thu: '',
     fri: '',
     sat: '',
-    startFunc: '',
   }),
   getters: {
   },
