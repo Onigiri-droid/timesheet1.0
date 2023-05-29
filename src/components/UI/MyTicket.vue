@@ -1,23 +1,31 @@
 <template>
-  <v-row v-for="ticket in filteredLesson" :key="ticket.id" class="ticket">
-    <v-col class="ticket-number">
-      <div class="ticket-time">{{ ticket.number.starttimelesson.substr(0, 5) }}
-        {{ ticket.number.endtimelesson.substr(0, 5) }}
-      </div>
-      <div class="ticket-number-num">
-        <div class="number-num">{{ ticket.number.numberlesson_name }}</div>
-        <div class="number-short">{{ ticket.number.short }}</div>
-      </div>
-    </v-col>
-    <v-col class="ticket-theme">{{ ticket.theme.theme_name }}</v-col>
-    <v-col cols="4" class="ticket-teacher">{{ ticket.teacher.last_name }} {{ ticket.teacher.first_name }}
-      {{ ticket.teacher.middle_name }}
-    </v-col>
-    <v-col cols="2" class="ticket-group">{{ ticket.group.group_name }}</v-col>
-    <v-col cols="1" class="ticket-group">{{ ticket.subgroup.subgroups_name }}</v-col>
-    <v-col cols="1" class="ticket-cabinet">{{ ticket.cabinet.cabinet_name }}</v-col>
-  </v-row>
-  <v-row v-show="filteredLesson.length === 0">отдых</v-row>
+  <div v-for="(tickets, numberlesson_name) in groupedTickets" :key="numberlesson_name" class="ticket">
+    <v-row v-for="ticket in tickets" :key="ticket.id" class="ticket-row">
+      <!-- Теперь здесь выводятся два объекта с одинаковым значением ticket.number.numberlesson_name -->
+      <v-col class="ticket-number">
+        <div class="ticket-time">{{ ticket.number.starttimelesson.substr(0, 5) }}
+          {{ ticket.number.endtimelesson.substr(0, 5) }}
+        </div>
+        <div class="ticket-number-num">
+          <div class="number-num">{{ ticket.number.numberlesson_name }}</div>
+          <div class="number-short">{{ ticket.number.short }}</div>
+        </div>
+      </v-col>
+      <v-col class="ticket-theme">{{ ticket.theme ? ticket.theme.theme_name : '' }}</v-col>
+      <v-col cols="4" class="ticket-teacher">{{ ticket.teacher ? ticket.teacher.last_name : '' }}
+        {{ ticket.teacher ? ticket.teacher.first_name : '' }}
+        {{ ticket.teacher ? ticket.teacher.middle_name : '' }}
+      </v-col>
+      <v-col cols="2" class="ticket-group">{{ ticket.group.group_name }}</v-col>
+      <v-col cols="1" class="ticket-subgroup">{{ ticket.subgroup ? ticket.subgroup.subgroups_name : '' }}</v-col>
+      <v-col cols="1" class="ticket-cabinet">{{ ticket.cabinet ? ticket.cabinet.cabinet_name : '' }}</v-col>
+
+      <v-col class="ticket-practice_name">{{ ticket.practice_name ? ticket.practice_name.practice_name : '' }}</v-col>
+      <v-col class="ticket-startpractice">{{ ticket ? ticket.startpractice : '' }}</v-col>
+      <v-col class="ticket-endpractice">{{ ticket ? ticket.endpractice : '' }}</v-col>
+    </v-row>
+  </div>
+  <v-row class="lazy" v-show="filteredLesson.length === 0">{{ lazy }}</v-row>
 </template>
 
 <script>
@@ -29,13 +37,8 @@ export default {
   data: () => ({
     lesson: [],
     'api': 'https://jaronimo.pythonanywhere.com/api/lessonlist/',
-    lazy: 'Пар нет спим дальше',
+    lazy: 'Пар нет, ленимся дальше 😪',
   }),
-  computed: {
-    filteredLesson() {
-      return this.lesson.filter(ticket => this.checkVisibility(ticket));
-    },
-  },
   methods: {
     async getLessons() {
       axios.get(this.api).then(
@@ -49,12 +52,28 @@ export default {
     checkVisibility(ticket) {
       const searchQuery = this.$store.state.searchQuery;
       const transfers = this.$store.state.transfers;
-      const teacherFullName = ticket.teacher.last_name + ' ' + ticket.teacher.first_name + ' ' + ticket.teacher.middle_name;
-
+      const teacherFullName = (ticket.teacher?.last_name || '') + ' ' + (ticket.teacher?.first_name || '') + ' ' + (ticket.teacher?.middle_name || '');
+      const groupName = ticket.group?.group_name || '';
+      const cabinetName = ticket.cabinet?.cabinet_name || ''; // здесь была опечатка
       return (searchQuery === teacherFullName && ticket.date === transfers) ||
-          (searchQuery === ticket.group.group_name && ticket.date === transfers) ||
-          (searchQuery === ticket.cabinet.cabinet_name && ticket.date === transfers);
-    }
+          (searchQuery === groupName && ticket.date === transfers) ||
+          (searchQuery === cabinetName && ticket.date === transfers);
+    },
+  },
+  computed: {
+    filteredLesson() {
+      return this.lesson.filter(ticket => this.checkVisibility(ticket));
+    },
+    groupedTickets() {
+      const groups = {};
+      this.filteredLesson.forEach(ticket => {
+        if (!groups[ticket.number.numberlesson_name]) {
+          groups[ticket.number.numberlesson_name] = [];
+        }
+        groups[ticket.number.numberlesson_name].push(ticket);
+      });
+      return groups;
+    },
   },
   mounted() {
     this.getLessons()
@@ -63,8 +82,24 @@ export default {
 </script>
 
 <style>
+.v-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 1 auto;
+  margin: 0px;
+}
+
+.v-row + .v-row {
+  margin-top: 0px;
+}
+
+.v-col, .v-col-auto, .v-col-12, .v-col-11, .v-col-10, .v-col-9, .v-col-8, .v-col-7, .v-col-6, .v-col-5, .v-col-4, .v-col-3, .v-col-2, .v-col-1 {
+  width: 100%;
+  padding: 0px;
+}
+
 .ticket {
-  flex-wrap: nowrap;
+  display: grid;
   background: #F6F6F6;
   border-radius: 20px;
   height: 90px;
@@ -78,6 +113,15 @@ export default {
   background: #42464D;
   filter: none;
   color: #F6F6F6;
+}
+
+.ticket-row {
+  max-height: 90px;
+  min-height: 45px;
+}
+
+.ticket .ticket-row:not(:first-child) .ticket-number {
+  visibility: hidden;
 }
 
 .ticket:hover .ticket-time {
@@ -125,6 +169,7 @@ export default {
 
 .ticket-number {
   display: flex;
+  height: 90px;
   justify-content: center;
   align-items: center;
   border: 2px solid #FF820C;
@@ -135,35 +180,62 @@ export default {
   transition: background-color 0.3s ease;
 }
 
+.dark .ticket-number {
+  border: 2px solid #FF7B51;
+}
+
 .ticket-theme {
   display: flex;
-  justify-content: left;
   align-items: center;
   font-size: 20px;
+  max-height: 90px;
+  height: 100%;
+  min-height: 45px;
 }
+.ticket-theme:empty { display: none }
 
 .ticket-teacher {
   display: flex;
-  justify-content: left;
   align-items: center;
   font-size: 20px;
+  max-height: 90px;
+  height: 100%;
+  min-height: 45px;
 }
+.ticket-teacher~.ticket-cabinet { display: none }
 
 .ticket-group {
   display: flex;
-  justify-content: left;
   align-items: center;
   font-size: 20px;
+  max-height: 90px;
+  height: 100%;
+  min-height: 45px;
 }
+
+.ticket-subgroup {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  max-height: 90px;
+  height: 100%;
+  min-height: 45px;
+}
+.ticket-subgroup:empty { display: none }
 
 .ticket-cabinet {
   display: flex;
-  justify-content: left;
   align-items: center;
   font-size: 20px;
+  max-height: 90px;
+  height: 100%;
+  min-height: 45px;
 }
+.ticket-cabinet:empty { display: none }
 
-.dark .ticket-number {
-  border: 2px solid #FF7B51;
+.lazy {
+  display: flex;
+  justify-content: center;
+  font-size: 21px;
 }
 </style>

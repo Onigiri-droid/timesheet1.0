@@ -1,22 +1,22 @@
 <template>
   <div class="btn-day">
-    <input type="radio" id="day-1" name="days" @click="daySearch(1)" value="1"/>
-    <label class="radio-day monday" for="day-1">ПН</label>
-
-    <input type="radio" id="day-2" name="days" @click="daySearch(2)" value="2"/>
-    <label class="radio-day tuesday" for="day-2">ВТ</label>
-
-    <input type="radio" id="day-3" name="days" @click="daySearch(3)" value="3"/>
-    <label class="radio-day wednesday" for="day-3">СР</label>
-
-    <input type="radio" id="day-4" name="days" @click="daySearch(4)" value="4"/>
-    <label class="radio-day thursday" for="day-4">ЧТ</label>
-
-    <input type="radio" id="day-5" name="days" @click="daySearch(5)" value="5"/>
-    <label class="radio-day friday" for="day-5">ПТ</label>
-
-    <input type="radio" id="day-6" name="days" @click="daySearch(6)" value="6"/>
-    <label class="radio-day saturday" for="day-6">СБ</label>
+    <input
+        v-for="(label, index) in daysLabels"
+        :key="index"
+        type="radio"
+        :id="`day-${index + 1}`"
+        name="days"
+        @click="daySearch(index + 1)"
+        :value="index + 1"
+    />
+    <label
+        v-for="(label, index) in daysLabels"
+        :key="index"
+        :class="['radio-day', label.toLowerCase()]"
+        :for="`day-${index + 1}`"
+    >
+      {{ label }}
+    </label>
     <div class="glide"></div>
   </div>
 </template>
@@ -29,40 +29,30 @@ export default {
   data: () => ({
     days: '',
     'api': 'https://jaronimo.pythonanywhere.com/api/lessonlist/',
+    daysLabels: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
     weekDay: new Date().getDay(),
     transfer: '',
   }),
   methods: {
     daySearch(e) {
-      if (e == this.$store.state.mon.getDay()) {
-        this.$store.state.transfers = formatISO(this.$store.state.mon, {representation: 'date'})
-      } else if (e == this.$store.state.tue.getDay()) {
-        this.$store.state.transfers = formatISO(this.$store.state.tue, {representation: 'date'})
-      } else if (e == this.$store.state.wed.getDay()) {
-        this.$store.state.transfers = formatISO(this.$store.state.wed, {representation: 'date'})
-      } else if (e == this.$store.state.thu.getDay()) {
-        this.$store.state.transfers = formatISO(this.$store.state.thu, {representation: 'date'})
-      } else if (e == this.$store.state.fri.getDay()) {
-        this.$store.state.transfers = formatISO(this.$store.state.fri, {representation: 'date'})
-      } else if (e == this.$store.state.sat.getDay()) {
-        this.$store.state.transfers = formatISO(this.$store.state.sat, {representation: 'date'})
-      } else {
-        this.$store.state.transfers = formatISO(this.$store.state.mon, {representation: 'date'})
-      }
+      const days = [
+        this.$store.state.mon,
+        this.$store.state.tue,
+        this.$store.state.wed,
+        this.$store.state.thu,
+        this.$store.state.fri,
+        this.$store.state.sat
+      ];
+      const day = days.find(day => day.getDay() === e) || this.$store.state.mon;
+      this.$store.state.transfers = formatISO(day, { representation: 'date' });
     },
+
     dayActive() {
-      let currentDay = document.querySelectorAll('input[name="days"]')
-      if (this.weekDay == 0) {
-        let sunday = document.querySelector('#day-1')
-        sunday.checked = true;
-      } else {
-        for (let dayC of currentDay) {
-          if (dayC.value == this.weekDay) {
-            dayC.checked = true;
-          }
-        }
-      }
-    },
+      const checkedDay = this.weekDay === 0 ? 1 : this.weekDay;
+      const dayToCheck = document.querySelector(`#day-${checkedDay}`);
+      if (dayToCheck) dayToCheck.checked = true;
+    }
+
   },
   mounted() {
     this.dayActive();
@@ -130,9 +120,9 @@ input[type="radio"] {
   display: none;
 }
 
-input[type=radio]:checked + label {
-  color: var(--main-color);
-}
+/*input[type=radio]:checked + label {*/
+/*  color: var(--main-color);*/
+/*}*/
 
 input[id=day-1]:checked ~ .glide {
   transition: all .3s ease-out;

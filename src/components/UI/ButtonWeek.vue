@@ -1,38 +1,31 @@
 <template>
   <div class="btn-week">
-    <input type="radio" id="radio-1" name="weeks" @click="dayToday('p')" value="1"/>
-    <label class="radio-week past" for="radio-1">ПРОШЛАЯ</label>
-
-    <input type="radio" id="radio-2" name="weeks" @click="dayToday('c')" value="2"/>
-    <label class="radio-week current" for="radio-2">ТЕКУЩАЯ</label>
-
-    <input type="radio" id="radio-3" name="weeks" @click="dayToday('f')" value="3"/>
-    <label class="radio-week future" for="radio-3">СЛЕДУЮЩАЯ</label>
+    <input
+        v-for="(label, index) in weeksLabels"
+        :key="index"
+        type="radio"
+        :id="`radio-${index + 1}`"
+        name="weeks"
+        @click="dayToday(weekCodes[index])"
+        :value="index + 1"
+    />
+    <label
+        v-for="(label, index) in weeksLabels"
+        :key="index"
+        :class="['radio-week', label.toLowerCase()]"
+        :for="`radio-${index + 1}`"
+    >
+      {{ label }}
+    </label>
     <div class="glider"></div>
   </div>
 </template>
 
+
 <script>
 import {
-  formatISO,
-  isFriday,
-  isMonday,
-  isSaturday, isSunday,
-  isThursday,
-  isTuesday,
-  isWednesday,
-  nextFriday,
-  nextMonday,
-  nextSaturday,
-  nextThursday,
-  nextTuesday,
-  nextWednesday,
-  previousFriday,
-  previousMonday,
-  previousSaturday,
-  previousThursday,
-  previousTuesday,
-  previousWednesday
+  eachDayOfInterval,
+  formatISO, startOfWeek, subWeeks,
 } from "date-fns";
 
 export default {
@@ -45,176 +38,43 @@ export default {
     fri: '',
     sat: '',
     sad: new Date(),
+    days: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+    weeksLabels: ['ПРОШЛАЯ', 'ТЕКУЩАЯ', 'СЛЕДУЮЩАЯ'],
+    weekCodes: ['p', 'c', 'f']
   }),
   methods: {
     previousWeek() {
-      if (isMonday(this.sad)) {
-        this.mon = previousMonday(this.sad)
-        this.tue = previousTuesday(new Date())
-        this.wed = previousWednesday(new Date())
-        this.thu = previousThursday(new Date())
-        this.fri = previousFriday(new Date())
-        this.sat = previousSaturday(new Date())
-        this.dayTransfer()
-      } else if (isTuesday(this.sad)) {
-        this.mon = previousMonday(previousMonday(new Date()))
-        this.tue = previousTuesday(this.sad)
-        this.wed = previousWednesday(new Date())
-        this.thu = previousThursday(new Date())
-        this.fri = previousFriday(new Date())
-        this.sat = previousSaturday(new Date())
-        this.dayTransfer()
-      } else if (isWednesday(this.sad)) {
-        this.mon = previousMonday(previousMonday(new Date()))
-        this.tue = previousTuesday(previousTuesday(new Date()))
-        this.wed = previousWednesday(this.sad)
-        this.thu = previousThursday(new Date())
-        this.fri = previousFriday(new Date())
-        this.sat = previousSaturday(new Date())
-        this.dayTransfer()
-      } else if (isThursday(this.sad)) {
-        this.mon = previousMonday(previousMonday(new Date()))
-        this.tue = previousTuesday(previousTuesday(new Date()))
-        this.wed = previousWednesday(previousWednesday(new Date()))
-        this.thu = previousThursday(this.sad)
-        this.fri = previousFriday(new Date())
-        this.sat = previousSaturday(new Date())
-        this.dayTransfer()
-      } else if (isFriday(this.sad)) {
-        this.mon = previousMonday(previousMonday(new Date()))
-        this.tue = previousTuesday(previousTuesday(new Date()))
-        this.wed = previousWednesday(previousWednesday(new Date()))
-        this.thu = previousThursday(previousThursday(new Date()))
-        this.fri = previousFriday(this.sad)
-        this.sat = previousSaturday(new Date())
-        this.dayTransfer()
-      } else if (isSaturday(this.sad)) {
-        this.mon = previousMonday(previousMonday(new Date()))
-        this.tue = previousTuesday(previousTuesday(new Date()))
-        this.wed = previousWednesday(previousWednesday(new Date()))
-        this.thu = previousThursday(previousThursday(new Date()))
-        this.fri = previousFriday(previousFriday(new Date()))
-        this.sat = previousSaturday(this.sad)
-        this.dayTransfer()
-      } else if (isSunday(this.sad)) {
-        this.mon = previousMonday(previousMonday(new Date()))
-        this.tue = previousTuesday(previousTuesday(new Date()))
-        this.wed = previousWednesday(previousWednesday(new Date()))
-        this.thu = previousThursday(previousThursday(new Date()))
-        this.fri = previousFriday(previousFriday(new Date()))
-        this.sat = previousSaturday(previousSaturday(new Date()))
-        this.dayTransfer()
-      }
+      const startDate = startOfWeek(subWeeks(new Date(), 1));
+      const endDate = new Date(startDate);
+      endDate.setDate(startDate.getDate() + 6);
+      const dates = eachDayOfInterval({start: startDate, end: endDate});
+      this.mon = dates[0];
+      this.tue = dates[1];
+      this.wed = dates[2];
+      this.thu = dates[3];
+      this.fri = dates[4];
+      this.sat = dates[5];
+      this.dayTransfer();
     },
     nextWeek() {
-      if (isMonday(this.sad)) {
-        this.mon = nextMonday(nextMonday(this.sad))
-        this.tue = nextTuesday(nextTuesday(new Date()))
-        this.wed = nextWednesday(nextWednesday(new Date()))
-        this.thu = nextThursday(nextThursday(new Date()))
-        this.fri = nextFriday(nextFriday(new Date()))
-        this.sat = nextSaturday(nextSaturday(new Date()))
-        this.dayTransfer()
-      } else if (isTuesday(this.sad)) {
-        this.mon = nextMonday(new Date())
-        this.tue = nextTuesday(this.sad)
-        this.wed = nextWednesday(nextWednesday(new Date()))
-        this.thu = nextThursday(nextThursday(new Date()))
-        this.fri = nextFriday(nextFriday(new Date()))
-        this.sat = nextSaturday(nextSaturday(new Date()))
-        this.dayTransfer()
-      } else if (isWednesday(this.sad)) {
-        this.mon = nextMonday(new Date())
-        this.tue = nextTuesday(new Date())
-        this.wed = nextWednesday(this.sad)
-        this.thu = nextThursday(nextThursday(new Date()))
-        this.fri = nextFriday(nextFriday(new Date()))
-        this.sat = nextSaturday(nextSaturday(new Date()))
-        this.dayTransfer()
-      } else if (isThursday(this.sad)) {
-        this.mon = nextMonday(new Date())
-        this.tue = nextTuesday(new Date())
-        this.wed = nextWednesday(new Date())
-        this.thu = nextThursday(this.sad)
-        this.fri = nextFriday(nextFriday(new Date()))
-        this.sat = nextSaturday(nextSaturday(new Date()))
-        this.dayTransfer()
-      } else if (isFriday(this.sad)) {
-        this.mon = nextMonday(new Date())
-        this.tue = nextTuesday(new Date())
-        this.wed = nextWednesday(new Date())
-        this.thu = nextThursday(new Date())
-        this.fri = nextFriday(this.sad)
-        this.sat = nextSaturday(nextSaturday(new Date()))
-        this.dayTransfer()
-      } else if (isSaturday(this.sad) || isSunday(this.sad)) {
-        this.mon = nextMonday(new Date())
-        this.tue = nextTuesday(new Date())
-        this.wed = nextWednesday(new Date())
-        this.thu = nextThursday(new Date())
-        this.fri = nextFriday(new Date())
-        this.sat = nextSaturday(this.sad)
-        this.dayTransfer()
-      }
+      const startDate = startOfWeek(subWeeks(new Date(), -1));
+      const endDate = new Date(startDate);
+      endDate.setDate(startDate.getDate() + 6);
+      const dates = eachDayOfInterval({start: startDate, end: endDate});
+      this.mon = dates[0];
+      this.tue = dates[1];
+      this.wed = dates[2];
+      this.thu = dates[3];
+      this.fri = dates[4];
+      this.sat = dates[5];
+      this.dayTransfer();
     },
     currentWeek() {
-      if (isMonday(this.sad)) {
-        this.mon = this.sad
-        this.tue = nextTuesday(new Date())
-        this.wed = nextWednesday(new Date())
-        this.thu = nextThursday(new Date())
-        this.fri = nextFriday(new Date())
-        this.sat = nextSaturday(new Date())
-        this.dayTransfer()
-      } else if (isTuesday(this.sad)) {
-        this.mon = previousMonday(new Date())
-        this.tue = this.sad
-        this.wed = nextWednesday(new Date())
-        this.thu = nextThursday(new Date())
-        this.fri = nextFriday(new Date())
-        this.sat = nextSaturday(new Date())
-        this.dayTransfer()
-      } else if (isWednesday(this.sad)) {
-        this.mon = previousMonday(new Date())
-        this.tue = previousTuesday(new Date())
-        this.wed = this.sad
-        this.thu = nextThursday(new Date())
-        this.fri = nextFriday(new Date())
-        this.sat = nextSaturday(new Date())
-        this.dayTransfer()
-      } else if (isThursday(this.sad)) {
-        this.mon = previousMonday(new Date())
-        this.tue = previousTuesday(new Date())
-        this.wed = previousWednesday(new Date())
-        this.thu = this.sad
-        this.fri = nextFriday(new Date())
-        this.sat = nextSaturday(new Date())
-        this.dayTransfer()
-      } else if (isFriday(this.sad)) {
-        this.mon = previousMonday(new Date())
-        this.tue = previousTuesday(new Date())
-        this.wed = previousWednesday(new Date())
-        this.thu = previousThursday(new Date())
-        this.fri = this.sad
-        this.sat = nextSaturday(new Date())
-        this.dayTransfer()
-      } else if (isSaturday(this.sad)) {
-        this.mon = previousMonday(new Date())
-        this.tue = previousTuesday(new Date())
-        this.wed = previousWednesday(new Date())
-        this.thu = previousThursday(new Date())
-        this.fri = previousFriday(new Date())
-        this.sat = this.sad
-        this.dayTransfer()
-      } else if (isSunday(this.sad)) {
-        this.mon = previousMonday(new Date())
-        this.tue = previousTuesday(new Date())
-        this.wed = previousWednesday(new Date())
-        this.thu = previousThursday(new Date())
-        this.fri = previousFriday(new Date())
-        this.sat = previousSaturday(new Date())
-        this.dayTransfer()
-      }
+      this.days.forEach((day, index) => {
+        this[day] = new Date(this.sad);
+        this[day].setDate(this.sad.getDate() - this.sad.getDay() + index + 1);
+      });
+      this.dayTransfer();
     },
     dayUpdate() {
       let currentDay = document.querySelectorAll('input[name="days"]')
@@ -291,7 +151,7 @@ export default {
       [row2-start] "glider glider glider" 3px [row2-end]
       / 1fr 1fr 1fr;
   align-items: center;
-  margin: 20px 0 10px;
+  margin-bottom: 10px;
   justify-items: center;
   transition: all .5s ease-out;
 }
@@ -329,9 +189,9 @@ input[type="radio"] {
   display: none;
 }
 
-input[type=radio]:checked + label {
-  color: var(--main-color);
-}
+/*input[type=radio]:checked + label {*/
+/*  color: var(--main-color);*/
+/*}*/
 
 input[id=radio-1]:checked ~ .glider {
   transition: all .3s ease-out;

@@ -2,7 +2,7 @@
   <header>
     <div class="wrapper header-nav">
     <router-link to="/">
-      <v-img class="logo" src="@/assets/img/logo.png"></v-img>
+      <v-img class="logo" src="@/assets/img/logo.svg"></v-img>
     </router-link>
   <nav class="nav">
     <router-link to="/about">

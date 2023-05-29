@@ -27,6 +27,7 @@
 .body {
     background: var(--background);
     transition: all .5s ease-out;
+    user-select: none;
 }
 .dark{
     background: var(--background-dark);

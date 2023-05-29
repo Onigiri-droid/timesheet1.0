@@ -68,6 +68,7 @@ export default {
 }
 .v-input__control {
   height: 70px;
+  margin-bottom: 20px;
 }
 .v-field__input {
   font-size: 21px;
