@@ -30,7 +30,7 @@ export default {
 <style scoped>
 .archive{
   display: flex;
-  gap: 20px;
+  column-gap: 20px;
   justify-content: space-between;
 }
 .my-search {
