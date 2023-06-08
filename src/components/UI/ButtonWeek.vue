@@ -48,12 +48,12 @@ export default {
       const endDate = new Date(startDate);
       endDate.setDate(startDate.getDate() + 6);
       const dates = eachDayOfInterval({start: startDate, end: endDate});
-      this.mon = dates[0];
-      this.tue = dates[1];
-      this.wed = dates[2];
-      this.thu = dates[3];
-      this.fri = dates[4];
-      this.sat = dates[5];
+      this.mon = dates[1];
+      this.tue = dates[2];
+      this.wed = dates[3];
+      this.thu = dates[4];
+      this.fri = dates[5];
+      this.sat = dates[6];
       this.dayTransfer();
     },
     nextWeek() {
@@ -61,12 +61,12 @@ export default {
       const endDate = new Date(startDate);
       endDate.setDate(startDate.getDate() + 6);
       const dates = eachDayOfInterval({start: startDate, end: endDate});
-      this.mon = dates[0];
-      this.tue = dates[1];
-      this.wed = dates[2];
-      this.thu = dates[3];
-      this.fri = dates[4];
-      this.sat = dates[5];
+      this.mon = dates[1];
+      this.tue = dates[2];
+      this.wed = dates[3];
+      this.thu = dates[4];
+      this.fri = dates[5];
+      this.sat = dates[6];
       this.dayTransfer();
     },
     currentWeek() {
@@ -157,41 +157,28 @@ export default {
 }
 
 .radio-week {
-  padding: 12% 33.3%;
-}
-
-.btn-week label {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: center;
   cursor: pointer;
-}
-
-.past {
-  grid-area: past;
-}
-
-.current {
-  grid-area: current;
-}
-
-.future {
-  grid-area: future;
+  width: 100%;
+  height: 100%;
+  font-size: clamp(15px, 1.7vw, 22px);
 }
 
 .glider {
   grid-area: glider;
   height: 3px;
-  width: 200px;
+  width: 33.3%;
   background-color: var(--dark-main);
-  border-radius: 99px;
+  border-radius: 100px;
   transition: all .5s ease-out;
 }
 
 input[type="radio"] {
   display: none;
 }
-
-/*input[type=radio]:checked + label {*/
-/*  color: var(--main-color);*/
-/*}*/
 
 input[id=radio-1]:checked ~ .glider {
   transition: all .3s ease-out;

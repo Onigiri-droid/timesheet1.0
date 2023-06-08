@@ -11,13 +11,18 @@
           <div class="number-short">{{ ticket.number.short }}</div>
         </div>
       </v-col>
-      <v-col class="ticket-theme">{{ ticket.theme.theme_name }}</v-col>
-      <v-col cols="4" class="ticket-teacher">{{ ticket.teacher.last_name }} {{ ticket.teacher.first_name }}
-        {{ ticket.teacher.middle_name }}
+      <v-col class="ticket-theme">{{ ticket.theme ? ticket.theme.theme_name : '' }}</v-col>
+      <v-col cols="4" class="ticket-teacher">{{ ticket.teacher ? ticket.teacher.last_name : '' }}
+        {{ ticket.teacher ? ticket.teacher.first_name : '' }}
+        {{ ticket.teacher ? ticket.teacher.middle_name : '' }}
       </v-col>
       <v-col cols="2" class="ticket-group">{{ ticket.group.group_name }}</v-col>
-      <v-col cols="1" class="ticket-subgroup">{{ ticket.subgroup.subgroups_name }}</v-col>
-      <v-col cols="1" class="ticket-cabinet">{{ ticket.cabinet.cabinet_name }}</v-col>
+      <v-col cols="1" class="ticket-subgroup">{{ ticket.subgroup ? ticket.subgroup.subgroups_name : '' }}</v-col>
+      <v-col cols="1" class="ticket-cabinet">{{ ticket.cabinet ? ticket.cabinet.cabinet_name : '' }}</v-col>
+
+      <v-col class="ticket-practice_name">{{ ticket.practice_name ? ticket.practice_name.practice_name : '' }}</v-col>
+      <v-col cols="2" class="ticket-startpractice">{{ ticket ? ticket.startpractice : '' }}</v-col>
+      <v-col cols="2" class="ticket-endpractice">{{ tickets ? ticket.endpractice : '' }}</v-col>
     </v-row>
   </div>
   <v-row class="lazy" v-show="filteredLesson.length === 0">{{ lazy }}</v-row>
@@ -46,12 +51,18 @@ export default {
     },
     checkVisibility(ticket) {
       const searchQuery = this.$store.state.searchQuery;
-      const searchDates = this.$store.state.searchDates;
-      const teacherFullName = ticket.teacher.last_name + ' ' + ticket.teacher.first_name + ' ' + ticket.teacher.middle_name;
+      const searchDates = this.$store.state.searchDates ? this.$store.state.searchDates.replace(/-/g, '.') : null;
+      const teacherFullName = (ticket.teacher?.last_name || '') + ' ' + (ticket.teacher?.first_name || '') + ' ' + (ticket.teacher?.middle_name || '');
+      const groupName = ticket.group?.group_name || '';
+      const cabinetName = ticket.cabinet?.cabinet_name || '';
 
-      return (searchQuery === teacherFullName && ticket.date === searchDates) ||
-          (searchQuery === ticket.group.group_name && ticket.date === searchDates) ||
-          (searchQuery === ticket.cabinet.cabinet_name && ticket.date === searchDates);
+      const ticketDate = ticket.date ? ticket.date.replace(/-/g, '.') : null; // Перевод даты в формат с точками и проверка на null
+
+      // Проверяем, есть ли начало и конец практики
+
+      return ((searchQuery === teacherFullName && ticketDate === searchDates) ||
+          (searchQuery === groupName && ticketDate === searchDates) ||
+          (searchQuery === cabinetName && ticketDate === searchDates)) && searchDates && ticketDate;
     }
   },
   computed: {
@@ -71,10 +82,8 @@ export default {
   },
   mounted() {
     this.getLessons()
-  },
+  }
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

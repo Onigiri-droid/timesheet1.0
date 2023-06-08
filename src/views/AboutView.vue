@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="archiv-search">
+    <div class="archive">
       <my-search class="my-search"></my-search>
       <archive-search class="archive-search"></archive-search>
     </div>
@@ -28,14 +28,28 @@ export default {
 </script>
 
 <style scoped>
-.archiv-search {
+.archive{
   display: flex;
-  gap: 40px;
+  column-gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .my-search {
   width: 100%;
+  max-width: 565px;
 }
 .archive-search {
   width: 100%;
+  max-width: 565px;
+}
+
+@media (max-width: 1267px) {
+  .my-search {
+    max-width: none;
+    height: 70px;
+  }
+  .archive-search {
+    max-width: none;
+  }
 }
 </style>

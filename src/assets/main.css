@@ -28,6 +28,7 @@
     background: var(--background);
     transition: all .5s ease-out;
     user-select: none;
+    line-height: initial;
 }
 .dark{
     background: var(--background-dark);
@@ -38,3 +39,118 @@
     -webkit-padding-end: 0px;
     padding-inline-end: 0px;
 }
+
+@media (max-width: 860px) {
+    .ticket-row {
+        display: grid;
+        grid-template:
+                [row1-start] "ticket-number ticket-theme ticket-teacher ticket-group ticket-subgroup ticket-cabinet" 100%[row1-end]
+                / 108px 2.2fr 4fr 1.1fr .5fr .5fr;
+        padding-right: 15px;
+        width: 97%;
+    }
+    .v-col-4 {
+        max-width: 100%;
+    }
+    .v-col-2 {
+        max-width: 100%;
+    }
+    .v-col-1 {
+        max-width: 100%;
+    }
+    .practice .ticket-row {
+        display: grid;
+        grid-template:[row1-start] "ticket-number ticket-group practice_name startpractice endpractice" 100%[row1-end]
+        / auto auto auto auto auto;
+        justify-content: space-between;
+        column-gap: 10px;
+    }
+}
+
+@media (max-width: 750px) {
+    .ticket-row div:not(:first-child) {
+        font-size: clamp(16px, 4vw, 22px);
+    }
+    .ticket {
+        height: auto;
+    }
+    .ticket-cabinet {
+        justify-content: end;
+    }
+    .ticket-row {
+        grid-template:
+                [row1-start] "ticket-number ticket-theme ticket-subgroup" 30px [row1-end]
+                [row2-start] "ticket-number ticket-teacher ticket-teacher" 30px [row2-end]
+                [row3-start] "ticket-number ticket-group ticket-cabinet" 30px [row3-end]
+                / 108px auto auto;
+        align-items: center;
+        height: auto;
+    }
+    .ticket-row:first-child:not(:last-child) {
+        border-bottom: 2px solid var(--main-color);
+        border-radius: 20px 0 0 20px;
+    }
+    .ticket-number:first-child {
+        border-radius: 20px 20px 0px 20px;
+    }
+    .dark .ticket-row:first-child:not(:last-child) {
+        border-bottom: 2px solid var(--dark-main);
+
+    }
+    .practice .ticket-row div {
+        font-size: clamp(14px, 1.7vw, 22px) !important;
+    }
+}
+
+@media (max-width: 635px) {
+    .practice .ticket-row {
+        grid-template:
+                [row1-start] "ticket-number practice_name ticket-group" 50% [row1-end]
+                [row2-start] "ticket-number startpractice endpractice" 50% [row2-end]
+                / 108px auto auto;
+        justify-content: normal;
+        column-gap: 5px;
+    }
+}
+
+@media (max-width: 565px) {
+    .ticket-row {
+        grid-template:
+                [row1-start] "ticket-number ticket-theme ticket-subgroup" 25px [row1-end]
+                [row2-start] "ticket-number ticket-teacher ticket-teacher" 25px [row2-end]
+                [row3-start] "ticket-number ticket-group ticket-cabinet" 25px [row3-end]
+                / 85px auto 0.9fr;
+        height: 75px;
+    }
+    .ticket-row:first-child:not(:last-child) {
+        border-radius: 0px 22px;
+    }
+    .ticket-row div:not(:first-child) {
+        font-size: clamp(13px, 3.5vw, 22px);
+    }
+    .ticket-number {
+        height: 75px;
+        min-width: 75px;
+    }
+    .ticket-time {
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .practice .ticket-row {
+        padding: 0;
+    }
+}
+@media (max-width: 401px) {
+    .practice .ticket-row {
+        grid-template:
+                [row1-start] "ticket-number practice_name practice_name" 25px [row1-end]
+                [row2-start] "ticket-number ticket-group ticket-group" 25px [row2-end]
+                [row2-start] "ticket-number startpractice endpractice" 25px [row3-end]
+                / 85px auto auto;
+        column-gap: 5px;
+    }
+    .ticket-number:first-child {
+        width: 75px;
+    }
+}
+/*word-break: break-all;*/

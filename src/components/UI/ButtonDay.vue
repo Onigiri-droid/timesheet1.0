@@ -75,54 +75,28 @@ export default {
 }
 
 .radio-day {
-  padding: 12% 40%;
-}
-
-.btn-day label {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: center;
   cursor: pointer;
-}
-
-.monday {
-  grid-area: monday;
-}
-
-.tuesday {
-  grid-area: tuesday;
-}
-
-.wednesday {
-  grid-area: wednesday;
-}
-
-.thursday {
-  grid-area: thursday;
-}
-
-.friday {
-  grid-area: friday;
-}
-
-.saturday {
-  grid-area: saturday;
+  width: 100%;
+  height: 100%;
+  font-size: clamp(15px, 1.7vw, 22px);
 }
 
 .glide {
   grid-area: glide;
   height: 3px;
-  width: 150px;
-  /*width: 50px;*/
+  width: 16.67%;
   background-color: var(--dark-main);
-  border-radius: 99px;
+  border-radius: 100px;
   transition: 0.3s ease-out;
 }
 
 input[type="radio"] {
   display: none;
 }
-
-/*input[type=radio]:checked + label {*/
-/*  color: var(--main-color);*/
-/*}*/
 
 input[id=day-1]:checked ~ .glide {
   transition: all .3s ease-out;

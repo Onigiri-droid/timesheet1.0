@@ -1,5 +1,5 @@
 <template>
-  <v-combobox :items="mySearch" label="Введите номер группы, кабинет или преподавателя" variant="solo" item-value="id" clearable v-model="this.$store.state.searchQuery"></v-combobox>
+  <v-combobox :items="mySearch" label="Выберите параметр" variant="solo" item-value="id" clearable v-model="this.$store.state.searchQuery"></v-combobox>
 </template>
 
 <script>
@@ -24,21 +24,29 @@ export default {
       }
     },
     async getGroups() {
-      this.fetchData('group', response => {
-        let groups = response.data.map(item => item.group_name);
-        groups.forEach(group => this.mySearch.push(group));
+      return new Promise(resolve => {
+        this.fetchData('group', response => {
+          let groups = response.data.map(item => item.group_name);
+          resolve(groups);
+        });
       });
     },
     async getTeachers() {
-      this.fetchData('teacher', response => {
-        let teacher = response.data.map(item => item.last_name + ' ' + item.first_name + ' ' + item.middle_name);
-        this.mySearch = teacher.sort();
+      return new Promise(resolve => {
+        this.fetchData('teacher', response => {
+          let teachers = response.data.map(item =>
+              item.last_name + " " + item.first_name + " " + item.middle_name
+          );
+          resolve(teachers.sort());
+        });
       });
     },
     async getCabinets() {
-      this.fetchData('cabinet', response => {
-        let cabinets = response.data.map(item => item.cabinet_name);
-        cabinets.forEach(cabinet => this.mySearch.push(cabinet));
+      return new Promise(resolve => {
+        this.fetchData('cabinet', response => {
+          let cabinets = response.data.map(item => item.cabinet_name);
+          resolve(cabinets);
+        });
       });
     },
   },
@@ -57,7 +65,13 @@ export default {
     }
   },
   async created() {
-    await Promise.all([this.getGroups(), this.getTeachers(), this.getCabinets()]);
+    const [groups, teachers, cabinets] = await Promise.all([
+      this.getGroups(),
+      this.getTeachers(),
+      this.getCabinets()
+    ]);
+
+    this.mySearch = [...groups, ...teachers, ...cabinets];
   }
 }
 </script>
@@ -71,7 +85,7 @@ export default {
   margin-bottom: 20px;
 }
 .v-field__input {
-  font-size: 21px;
+  font-size: clamp(15px, 1.7vw, 22px);
 }
 .dark .v-field.v-field {
   color: #FAFAFA;
@@ -97,8 +111,3 @@ export default {
   border-radius: 20px;
 }
 </style>
-
-<!--Использовать Promise.all() для параллельного выполнения запросов к API. Это может сократить время ожидания и ускорить загрузку данных.-->
-<!--Сохранять результаты запросов в кеше, чтобы не делать повторные запросы при повторном использовании приложения или при переходах между страницами.-->
-<!--Использовать async/await вместо .then() и .catch() для более читаемого и удобного кода.-->
-<!--Использовать map() вместо цикла for для более чистого и лаконичного кода.-->

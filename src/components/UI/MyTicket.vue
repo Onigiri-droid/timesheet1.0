@@ -1,5 +1,5 @@
 <template>
-  <div v-for="(tickets, numberlesson_name) in groupedTickets" :key="numberlesson_name" class="ticket">
+      <div v-for="(tickets, numberlesson_name) in groupedTickets" :key="numberlesson_name" :class="isPractice(tickets, numberlesson_name) ? 'ticket practice' : 'ticket'">
     <v-row v-for="ticket in tickets" :key="ticket.id" class="ticket-row">
       <!-- Теперь здесь выводятся два объекта с одинаковым значением ticket.number.numberlesson_name -->
       <v-col class="ticket-number">
@@ -21,8 +21,8 @@
       <v-col cols="1" class="ticket-cabinet">{{ ticket.cabinet ? ticket.cabinet.cabinet_name : '' }}</v-col>
 
       <v-col class="ticket-practice_name">{{ ticket.practice_name ? ticket.practice_name.practice_name : '' }}</v-col>
-      <v-col class="ticket-startpractice">{{ ticket ? ticket.startpractice : '' }}</v-col>
-      <v-col class="ticket-endpractice">{{ ticket ? ticket.endpractice : '' }}</v-col>
+      <v-col cols="2" class="ticket-startpractice">{{ ticket ? ticket.startpractice : '' }}</v-col>
+      <v-col cols="2" class="ticket-endpractice">{{ tickets ? ticket.endpractice : '' }}</v-col>
     </v-row>
   </div>
   <v-row class="lazy" v-show="filteredLesson.length === 0">{{ lazy }}</v-row>
@@ -54,10 +54,14 @@ export default {
       const transfers = this.$store.state.transfers;
       const teacherFullName = (ticket.teacher?.last_name || '') + ' ' + (ticket.teacher?.first_name || '') + ' ' + (ticket.teacher?.middle_name || '');
       const groupName = ticket.group?.group_name || '';
-      const cabinetName = ticket.cabinet?.cabinet_name || ''; // здесь была опечатка
+      const cabinetName = ticket.cabinet?.cabinet_name || '';
+      const date = new Date(transfers);
+
       return (searchQuery === teacherFullName && ticket.date === transfers) ||
           (searchQuery === groupName && ticket.date === transfers) ||
-          (searchQuery === cabinetName && ticket.date === transfers);
+          (searchQuery === cabinetName && ticket.date === transfers) ||
+
+          (ticket.practice_bool && date >= new Date(ticket.startpractice) && date <= new Date(ticket.endpractice));
     },
   },
   computed: {
@@ -74,6 +78,12 @@ export default {
       });
       return groups;
     },
+    // Добавление стилей для практики
+    isPractice() {
+      return (tickets) => {
+        return tickets.some(ticket => ticket.number.numberlesson_name === 'Практика');
+      };
+    }
   },
   mounted() {
     this.getLessons()
@@ -131,14 +141,26 @@ export default {
 .ticket:hover .ticket-number-num {
   display: none;
 }
-
 .ticket:hover .ticket-number {
-  background-color: #FF820C;
-  color: #F6F6F6;
-}
-
+   background-color: #FF820C;
+   color: #F6F6F6;
+ }
 .dark .ticket:hover .ticket-number {
   background-color: #FF7B51;
+}
+/*Стили для практики*/
+.practice:hover .ticket-time {
+  display: none;
+}
+.practice:hover .ticket-number-num {
+  display: flex;
+}
+.practice .number-num {
+  font-size: clamp(15px, 2.5vw, 22px);
+}
+/**/
+.ticket-row div:not(:first-child) {
+  font-size: clamp(15px, 1.7vw, 22px);
 }
 
 .ticket-time {
@@ -168,13 +190,16 @@ export default {
 }
 
 .ticket-number {
+  grid-area: ticket-number;
   display: flex;
   height: 90px;
   justify-content: center;
   align-items: center;
   border: 2px solid #FF820C;
-  border-radius: 20px 50px 50px 20px;
-  max-width: 90px;
+  border-radius: 20px 20px 0px 20px;
+  max-width: min-content;
+  width: fit-content;
+  min-width: 90px;
   margin: 0 18px 0 0;
   padding: 0 12px;
   transition: background-color 0.3s ease;
@@ -185,9 +210,9 @@ export default {
 }
 
 .ticket-theme {
+  grid-area: ticket-theme;
   display: flex;
   align-items: center;
-  font-size: 20px;
   max-height: 90px;
   height: 100%;
   min-height: 45px;
@@ -195,28 +220,28 @@ export default {
 .ticket-theme:empty { display: none }
 
 .ticket-teacher {
+  grid-area: ticket-teacher;
   display: flex;
   align-items: center;
-  font-size: 20px;
   max-height: 90px;
   height: 100%;
   min-height: 45px;
 }
-.ticket-teacher~.ticket-cabinet { display: none }
+.ticket-theme:empty ~ .ticket-teacher { display: none }
 
 .ticket-group {
+  grid-area: ticket-group;
   display: flex;
   align-items: center;
-  font-size: 20px;
   max-height: 90px;
   height: 100%;
   min-height: 45px;
 }
 
 .ticket-subgroup {
+  grid-area: ticket-subgroup;
   display: flex;
   align-items: center;
-  font-size: 20px;
   max-height: 90px;
   height: 100%;
   min-height: 45px;
@@ -224,9 +249,9 @@ export default {
 .ticket-subgroup:empty { display: none }
 
 .ticket-cabinet {
+  grid-area: ticket-cabinet;
   display: flex;
   align-items: center;
-  font-size: 20px;
   max-height: 90px;
   height: 100%;
   min-height: 45px;
@@ -236,6 +261,36 @@ export default {
 .lazy {
   display: flex;
   justify-content: center;
-  font-size: 21px;
+  font-size: clamp(15px, 1.7vw, 22px);
 }
+
+.ticket-practice_name {
+  grid-area: practice_name;
+  display: flex;
+  align-items: center;
+  max-height: 90px;
+  height: 100%;
+  min-height: 45px;
+}
+.ticket-practice_name:empty { display: none }
+
+.ticket-startpractice {
+  grid-area: startpractice;
+  display: flex;
+  align-items: center;
+  max-height: 90px;
+  height: 100%;
+  min-height: 45px;
+}
+.ticket-startpractice:empty { display: none }
+
+.ticket-endpractice {
+  grid-area: endpractice;
+  display: flex;
+  align-items: center;
+  max-height: 90px;
+  height: 100%;
+  min-height: 45px;
+}
+.ticket-endpractice:empty { display: none }
 </style>
