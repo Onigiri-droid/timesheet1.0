@@ -31,6 +31,7 @@ export default {
 .archive{
   display: flex;
   column-gap: 10px;
+  row-gap: 20px;
   flex-wrap: wrap;
   justify-content: space-between;
 }
@@ -46,7 +47,6 @@ export default {
 @media (max-width: 1267px) {
   .my-search {
     max-width: none;
-    height: 70px;
   }
   .archive-search {
     max-width: none;

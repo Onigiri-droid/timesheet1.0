@@ -40,12 +40,24 @@
     padding-inline-end: 0px;
 }
 
+@media (min-width: 1024px) {
+    .ticket:hover .ticket-number {
+        background-color: #FF820C;
+        color: #F6F6F6;
+    }
+    .dark .ticket:hover .ticket-number {
+        background-color: #FF7B51;
+    }
+    .practice:hover .ticket-time {
+        display: none;
+    }
+}
+
 @media (max-width: 860px) {
     .ticket-row {
         display: grid;
-        grid-template:
-                [row1-start] "ticket-number ticket-theme ticket-teacher ticket-group ticket-subgroup ticket-cabinet" 100%[row1-end]
-                / 108px 2.2fr 4fr 1.1fr .5fr .5fr;
+        grid-template:[row1-start] "ticket-number ticket-theme ticket-teacher ticket-group ticket-subgroup ticket-cabinet" 100%[row1-end]
+        / 108px 2.2fr 4fr 1.1fr .5fr .5fr;
         padding-right: 15px;
         width: 97%;
     }
@@ -68,6 +80,18 @@
 }
 
 @media (max-width: 750px) {
+    .btn-week {
+        display: grid;
+        grid-template:[row1-start] "past current future" 50px [row1-end]
+        [row2-start] "glider glider glider" 3px [row2-end]
+        / 1fr 1fr 1fr!important;
+    }
+    .btn-day {
+        display: grid;
+        grid-template:[row1-start] "monday tuesday wednesday thursday friday saturday" 50px [row1-end]
+        [row2-start] "glide glide glide glide glide glide" 3px [row2-end]
+        / 1fr 1fr 1fr 1fr 1fr 1fr!important;
+    }
     .ticket-row div:not(:first-child) {
         font-size: clamp(16px, 4vw, 22px);
     }
@@ -103,6 +127,18 @@
 }
 
 @media (max-width: 635px) {
+    .btn-week {
+        display: grid;
+        grid-template:[row1-start] "past current future" 40px [row1-end]
+        [row2-start] "glider glider glider" 3px [row2-end]
+        / 1fr 1fr 1fr!important;
+    }
+    .btn-day {
+        display: grid;
+        grid-template:[row1-start] "monday tuesday wednesday thursday friday saturday" 40px [row1-end]
+        [row2-start] "glide glide glide glide glide glide" 3px [row2-end]
+        / 1fr 1fr 1fr 1fr 1fr 1fr!important;
+    }
     .practice .ticket-row {
         grid-template:
                 [row1-start] "ticket-number practice_name ticket-group" 50% [row1-end]

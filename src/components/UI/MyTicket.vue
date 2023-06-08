@@ -108,6 +108,11 @@ export default {
   padding: 0px;
 }
 
+.v-input--density-default {
+  --v-input-control-height: 56px;
+  --v-input-padding-top: 18px;
+}
+
 .ticket {
   display: grid;
   background: #F6F6F6;
@@ -134,18 +139,17 @@ export default {
   visibility: hidden;
 }
 
-.ticket:hover .ticket-time {
+.ticket:active .ticket-time {
   display: flex;
 }
-
-.ticket:hover .ticket-number-num {
+.ticket:active .ticket-number-num {
   display: none;
 }
-.ticket:hover .ticket-number {
-   background-color: #FF820C;
-   color: #F6F6F6;
- }
-.dark .ticket:hover .ticket-number {
+.ticket:active .ticket-number {
+  background-color: #FF820C;
+  color: #F6F6F6;
+}
+.dark .ticket:active .ticket-number {
   background-color: #FF7B51;
 }
 /*Стили для практики*/
