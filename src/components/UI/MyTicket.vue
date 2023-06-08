@@ -153,6 +153,9 @@ export default {
   background-color: #FF7B51;
 }
 /*Стили для практики*/
+.practice {
+  margin-bottom: 30px;
+}
 .practice:hover .ticket-time {
   display: none;
 }
@@ -266,6 +269,7 @@ export default {
   display: flex;
   justify-content: center;
   font-size: clamp(15px, 1.7vw, 22px);
+  margin-bottom: 60px;
 }
 
 .ticket-practice_name {

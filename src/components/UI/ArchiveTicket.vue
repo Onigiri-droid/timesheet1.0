@@ -37,7 +37,7 @@ export default {
   data: () => ({
     lesson: [],
     'api': 'https://jaronimo.pythonanywhere.com/api/lessonlist/',
-    lazy: 'Пар нет, ленимся дальше 😪',
+    lazy: 'Пар нет, ленимся дальше 🗃️',
   }),
   methods: {
     async getLessons() {
