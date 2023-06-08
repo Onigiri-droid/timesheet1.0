@@ -124,6 +124,11 @@
     .practice .ticket-row div {
         font-size: clamp(14px, 1.7vw, 22px) !important;
     }
+    /*поле поиска*/
+    .v-input__control {
+        display: flex;
+        height: 58px;
+    }
 }
 
 @media (max-width: 635px) {
