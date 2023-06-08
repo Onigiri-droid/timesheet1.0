@@ -85,7 +85,7 @@ export default {
   margin-bottom: 20px;
 }
 .v-field__input {
-  font-size: clamp(15px, 1.7vw, 22px);
+  font-size: clamp(16px, 1.7vw, 22px);
 }
 .dark .v-field.v-field {
   color: #FAFAFA;

@@ -30,26 +30,19 @@ export default {
 <style scoped>
 .archive{
   display: flex;
-  column-gap: 10px;
-  row-gap: 20px;
-  flex-wrap: wrap;
+  gap: 20px;
   justify-content: space-between;
 }
 .my-search {
   width: 100%;
-  max-width: 565px;
 }
 .archive-search {
   width: 100%;
-  max-width: 565px;
 }
 
 @media (max-width: 1267px) {
-  .my-search {
-    max-width: none;
-  }
-  .archive-search {
-    max-width: none;
+  .archive{
+    flex-direction: column;
   }
 }
 </style>
