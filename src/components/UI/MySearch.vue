@@ -81,7 +81,7 @@ export default {
   border-radius: 200px;
 }
 .v-input__control {
-  height: 70px;
+  flex-wrap: wrap;
   margin-bottom: 20px;
 }
 .v-field__input {

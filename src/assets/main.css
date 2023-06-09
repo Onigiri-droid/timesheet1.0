@@ -41,7 +41,10 @@
     .dark .ticket:hover .ticket-number {
         background-color: #FF7B51;
     }
-    .practice:hover .ticket-time {
+    .ticket:hover .ticket-time {
+        display: flex;
+    }
+    .ticket:hover .ticket-number-num {
         display: none;
     }
 }
@@ -97,7 +100,7 @@
                 [row1-start] "ticket-number ticket-theme ticket-subgroup" 30px [row1-end]
                 [row2-start] "ticket-number ticket-teacher ticket-teacher" 30px [row2-end]
                 [row3-start] "ticket-number ticket-group ticket-cabinet" 30px [row3-end]
-                / 108px auto auto;
+                / 108px auto .9fr;
         align-items: center;
         height: auto;
     }
@@ -160,6 +163,8 @@
     }
     .ticket-number {
         height: 75px;
+        max-width: 75px;
+        width: 100%;
         min-width: 75px;
     }
     .ticket-time {
@@ -167,10 +172,18 @@
         font-weight: 500;
     }
     .practice .ticket-row {
+        grid-template:
+                [row1-start] "ticket-number practice_name ticket-group" 50% [row1-end]
+                [row2-start] "ticket-number startpractice endpractice" 50% [row2-end]
+                / 85px auto auto;
+        justify-content: normal;
+        column-gap: 5px;
+    }
+    .practice .ticket-row {
         padding: 0;
     }
 }
-@media (max-width: 401px) {
+@media (max-width: 408px) {
     .practice .ticket-row {
         grid-template:
                 [row1-start] "ticket-number practice_name practice_name" 25px [row1-end]

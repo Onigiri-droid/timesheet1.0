@@ -148,10 +148,10 @@ export default {
   margin-bottom: 30px;
 }
 .practice:hover .ticket-time {
-  display: none;
+  display: none!important;
 }
 .practice:hover .ticket-number-num {
-  display: flex;
+  display: flex!important;
 }
 .practice .number-num {
   font-size: clamp(15px, 2.5vw, 22px);
