@@ -13,18 +13,13 @@ export default {
   }),
   methods: {
     async getDates() {
-      axios
-          .get(this.api)
-          .then(response => {
+      axios.get(this.api).then(response => {
             let dates = response.data.map(item => {
               let date = item.date;
               return date;
             });
-
             let nonEmptyDates = dates.filter(date => date !== null); // Исключение пустых значений
-
             let uniqueDates = [...new Set(nonEmptyDates)]; // Удаление дубликатов
-
             // Сортировка дат от недавнего к давнему
             this.myDates = uniqueDates
                 .sort((a, b) => {

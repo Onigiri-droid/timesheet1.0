@@ -16,7 +16,6 @@ import ButtonDay from "@/components/UI/ButtonDay";
 
 export default defineComponent({
   name: 'HomeView',
-
   components: {
     mySearch,
     myTicket,

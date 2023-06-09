@@ -46,13 +46,11 @@ export default {
       const day = days.find(day => day.getDay() === e) || this.$store.state.mon;
       this.$store.state.transfers = formatISO(day, { representation: 'date' });
     },
-
     dayActive() {
       const checkedDay = this.weekDay === 0 ? 1 : this.weekDay;
       const dayToCheck = document.querySelector(`#day-${checkedDay}`);
       if (dayToCheck) dayToCheck.checked = true;
     }
-
   },
   mounted() {
     this.dayActive();
@@ -73,7 +71,6 @@ export default {
   justify-items: center;
   transition: 0.3s ease-out;
 }
-
 .radio-day {
   display: flex;
   align-items: center;
@@ -84,7 +81,6 @@ export default {
   height: 100%;
   font-size: clamp(15px, 1.7vw, 22px);
 }
-
 .glide {
   grid-area: glide;
   height: 3px;
@@ -93,36 +89,29 @@ export default {
   border-radius: 100px;
   transition: 0.3s ease-out;
 }
-
 input[type="radio"] {
   display: none;
 }
-
 input[id=day-1]:checked ~ .glide {
   transition: all .3s ease-out;
   margin-right: 83.3%;
 }
-
 input[id=day-2]:checked ~ .glide {
   transition: all .3s ease-out;
   margin-right: 50%;
 }
-
 input[id=day-3]:checked ~ .glide {
   transition: all .3s ease-out;
   margin-right: 16.6%;
 }
-
 input[id=day-4]:checked ~ .glide {
   transition: all .3s ease-out;
   margin-left: 16.6%;
 }
-
 input[id=day-5]:checked ~ .glide {
   transition: all .3s ease-out;
   margin-left: 50%;
 }
-
 input[id=day-6]:checked ~ .glide {
   transition: all .3s ease-out;
   margin-left: 83.3%;

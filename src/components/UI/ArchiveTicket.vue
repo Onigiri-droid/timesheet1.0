@@ -1,7 +1,6 @@
 <template>
   <div v-for="(tickets, numberlesson_name) in groupedTickets" :key="numberlesson_name" class="ticket">
     <v-row v-for="ticket in tickets" :key="ticket.id" class="ticket-row">
-      <!-- Теперь здесь выводятся два объекта с одинаковым значением ticket.number.numberlesson_name -->
       <v-col class="ticket-number">
         <div class="ticket-time">{{ ticket.number.starttimelesson.substr(0, 5) }}
           {{ ticket.number.endtimelesson.substr(0, 5) }}
@@ -55,11 +54,7 @@ export default {
       const teacherFullName = (ticket.teacher?.last_name || '') + ' ' + (ticket.teacher?.first_name || '') + ' ' + (ticket.teacher?.middle_name || '');
       const groupName = ticket.group?.group_name || '';
       const cabinetName = ticket.cabinet?.cabinet_name || '';
-
       const ticketDate = ticket.date ? ticket.date.replace(/-/g, '.') : null; // Перевод даты в формат с точками и проверка на null
-
-      // Проверяем, есть ли начало и конец практики
-
       return ((searchQuery === teacherFullName && ticketDate === searchDates) ||
           (searchQuery === groupName && ticketDate === searchDates) ||
           (searchQuery === cabinetName && ticketDate === searchDates)) && searchDates && ticketDate;

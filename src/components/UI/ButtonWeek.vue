@@ -155,7 +155,6 @@ export default {
   justify-items: center;
   transition: all .5s ease-out;
 }
-
 .radio-week {
   display: flex;
   align-items: center;
@@ -166,7 +165,6 @@ export default {
   height: 100%;
   font-size: clamp(15px, 1.7vw, 22px);
 }
-
 .glider {
   grid-area: glider;
   height: 3px;
@@ -175,21 +173,17 @@ export default {
   border-radius: 100px;
   transition: all .5s ease-out;
 }
-
 input[type="radio"] {
   display: none;
 }
-
 input[id=radio-1]:checked ~ .glider {
   transition: all .3s ease-out;
   margin-right: 66.6%;
 }
-
 input[id=radio-2]:checked ~ .glider {
   transition: all .3s ease-out;
   margin: 0 50%;
 }
-
 input[id=radio-3]:checked ~ .glider {
   transition: all .3s ease-out;
   margin-left: 66.6%;

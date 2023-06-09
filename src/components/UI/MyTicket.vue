@@ -97,24 +97,20 @@ export default {
   flex: 1 1 auto;
   margin: 0px;
 }
-
 .v-row + .v-row {
   margin-top: 0px;
 }
-
 .v-col, .v-col-auto, .v-col-12, .v-col-11, .v-col-10, .v-col-9, .v-col-8, .v-col-7, .v-col-6, .v-col-5, .v-col-4, .v-col-3, .v-col-2, .v-col-1 {
   width: 100%;
   padding: 0px;
 }
-
 .v-input--density-default {
   --v-input-control-height: 56px;
   --v-input-padding-top: 18px;
 }
-
 .ticket {
   display: grid;
-  background: #F6F6F6;
+  background: #FFF;
   border-radius: 20px;
   height: 90px;
   width: 100%;
@@ -122,22 +118,18 @@ export default {
   margin: 10px 0 0;
   transition: all .5s ease-out;
 }
-
 .dark .ticket {
   background: #42464D;
   filter: none;
   color: #F6F6F6;
 }
-
 .ticket-row {
   max-height: 90px;
   min-height: 45px;
 }
-
 .ticket .ticket-row:not(:first-child) .ticket-number {
   visibility: hidden;
 }
-
 .ticket:active .ticket-time {
   display: flex;
 }
@@ -168,7 +160,6 @@ export default {
 .ticket-row div:not(:first-child) {
   font-size: clamp(15px, 1.7vw, 22px);
 }
-
 .ticket-time {
   color: #F6F6F6;
   display: none;
@@ -176,25 +167,21 @@ export default {
   font-size: 22px;
   font-weight: 700;
 }
-
 .ticket-number-num {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-
 .number-num {
   font-size: 32px;
   height: 30px;
   display: flex;
   align-items: center;
 }
-
 .number-short {
   font-size: 20px;
 }
-
 .ticket-number {
   grid-area: ticket-number;
   display: flex;
@@ -210,11 +197,9 @@ export default {
   padding: 0 12px;
   transition: background-color 0.3s ease;
 }
-
 .dark .ticket-number {
   border: 2px solid #FF7B51;
 }
-
 .ticket-theme {
   grid-area: ticket-theme;
   display: flex;
@@ -224,7 +209,6 @@ export default {
   min-height: 45px;
 }
 .ticket-theme:empty { display: none }
-
 .ticket-teacher {
   grid-area: ticket-teacher;
   display: flex;
@@ -234,7 +218,6 @@ export default {
   min-height: 45px;
 }
 .ticket-theme:empty ~ .ticket-teacher { display: none }
-
 .ticket-group {
   grid-area: ticket-group;
   display: flex;
@@ -243,7 +226,6 @@ export default {
   height: 100%;
   min-height: 45px;
 }
-
 .ticket-subgroup {
   grid-area: ticket-subgroup;
   display: flex;
@@ -253,7 +235,6 @@ export default {
   min-height: 45px;
 }
 .ticket-subgroup:empty { display: none }
-
 .ticket-cabinet {
   grid-area: ticket-cabinet;
   display: flex;
@@ -263,14 +244,12 @@ export default {
   min-height: 45px;
 }
 .ticket-cabinet:empty { display: none }
-
 .lazy {
   display: flex;
   justify-content: center;
   font-size: clamp(15px, 1.7vw, 22px);
   margin-bottom: 60px;
 }
-
 .ticket-practice_name {
   grid-area: practice_name;
   display: flex;
@@ -280,7 +259,6 @@ export default {
   min-height: 45px;
 }
 .ticket-practice_name:empty { display: none }
-
 .ticket-startpractice {
   grid-area: startpractice;
   display: flex;
@@ -290,7 +268,6 @@ export default {
   min-height: 45px;
 }
 .ticket-startpractice:empty { display: none }
-
 .ticket-endpractice {
   grid-area: endpractice;
   display: flex;

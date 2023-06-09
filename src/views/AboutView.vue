@@ -21,7 +21,6 @@ export default {
     archiveSearch,
     archiveTicket,
   },
-
   data: () => ({
   }),
 }
@@ -39,7 +38,6 @@ export default {
 .archive-search {
   width: 100%;
 }
-
 @media (max-width: 1267px) {
   .archive{
     flex-direction: column;
