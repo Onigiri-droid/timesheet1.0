@@ -67,9 +67,6 @@ export default {
 .dark .icon-create {
   background-image: url("@/assets/img/layers_dark.svg");
 }
-.v-theme--light {
-  border-radius: 50px;
-}
 .v-btn--variant-elevated {
     box-shadow: none;
 }

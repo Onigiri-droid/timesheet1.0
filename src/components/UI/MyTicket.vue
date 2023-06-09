@@ -1,7 +1,6 @@
 <template>
       <div v-for="(tickets, numberlesson_name) in groupedTickets" :key="numberlesson_name" :class="isPractice(tickets, numberlesson_name) ? 'ticket practice' : 'ticket'">
     <v-row v-for="ticket in tickets" :key="ticket.id" class="ticket-row">
-      <!-- Теперь здесь выводятся два объекта с одинаковым значением ticket.number.numberlesson_name -->
       <v-col class="ticket-number">
         <div class="ticket-time">{{ ticket.number.starttimelesson.substr(0, 5) }}
           {{ ticket.number.endtimelesson.substr(0, 5) }}
@@ -61,7 +60,7 @@ export default {
           (searchQuery === groupName && ticket.date === transfers) ||
           (searchQuery === cabinetName && ticket.date === transfers) ||
 
-          (ticket.practice_bool && date >= new Date(ticket.startpractice) && date <= new Date(ticket.endpractice));
+          ((searchQuery === groupName && ticket.practice_bool) && date >= new Date(ticket.startpractice) && date <= new Date(ticket.endpractice));
     },
   },
   computed: {
