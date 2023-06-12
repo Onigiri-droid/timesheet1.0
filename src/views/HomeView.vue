@@ -16,6 +16,12 @@ import ButtonDay from "@/components/UI/ButtonDay";
 
 export default defineComponent({
   name: 'HomeView',
+  setup() {
+    const setTitle = (title) => {
+      document.title = title;
+    }
+    setTitle("Расписание");
+  },
   components: {
     mySearch,
     myTicket,

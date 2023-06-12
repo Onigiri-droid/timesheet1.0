@@ -1,6 +1,8 @@
 :root {
     --background: #f3f3f2;
     --background-dark: #2F3136;
+    --ticket: #FFF;
+    --ticket-dark: #42464D;
     --main-color: #FF820C;
     --dark-main: #FF7B51;
     --text: #101010;

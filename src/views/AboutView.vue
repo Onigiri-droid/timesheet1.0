@@ -15,7 +15,12 @@ import archiveTicket from "@/components/UI/ArchiveTicket";
 
 export default {
   name: 'AboutView',
-
+  setup() {
+    const setTitle = (title) => {
+      document.title = title;
+    }
+    setTitle("Архив");
+  },
   components: {
     mySearch,
     archiveSearch,

@@ -88,7 +88,7 @@ export default {
   font-size: clamp(16px, 1.7vw, 22px);
 }
 .dark .v-field.v-field {
-  color: #FAFAFA;
+  color: var(--dark-text);
 }
 .v-field--variant-solo {
   background: transparent;
@@ -103,7 +103,7 @@ export default {
 }
 .dark .v-theme--light {
   --v-theme-surface: 32,34,37;
-  color: #F6F6F6;
+  color: var(--dark-text);
   border-radius: 20px;
   --v-theme-on-surface-variant: 66, 70, 77;
 }

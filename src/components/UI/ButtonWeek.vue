@@ -182,7 +182,7 @@ input[id=radio-1]:checked ~ .glider {
 }
 input[id=radio-2]:checked ~ .glider {
   transition: all .3s ease-out;
-  margin: 0 50%;
+  margin: 0 33.33%;
 }
 input[id=radio-3]:checked ~ .glider {
   transition: all .3s ease-out;

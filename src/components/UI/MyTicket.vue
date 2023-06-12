@@ -36,7 +36,7 @@ export default {
   data: () => ({
     lesson: [],
     'api': 'https://jaronimo.pythonanywhere.com/api/lessonlist/',
-    lazy: 'Пар нет, ленимся дальше 😪',
+    lazy: 'Пар нет, ленимся дальше 😴',
   }),
   methods: {
     async getLessons() {
@@ -110,7 +110,7 @@ export default {
 }
 .ticket {
   display: grid;
-  background: #FFF;
+  background: var(--ticket);
   border-radius: 20px;
   height: 90px;
   width: 100%;
@@ -119,9 +119,9 @@ export default {
   transition: all .5s ease-out;
 }
 .dark .ticket {
-  background: #42464D;
+  background: var(--ticket-dark);
   filter: none;
-  color: #F6F6F6;
+  color: var(--dark-text);
 }
 .ticket-row {
   max-height: 90px;
@@ -137,11 +137,11 @@ export default {
   display: none;
 }
 .ticket:active .ticket-number {
-  background-color: #FF820C;
-  color: #F6F6F6;
+  background-color: var(--main-color);
+  color: var(--dark-text);
 }
 .dark .ticket:active .ticket-number {
-  background-color: #FF7B51;
+  background-color: var(--dark-main);
 }
 /*Стили для практики*/
 .practice {
@@ -161,7 +161,7 @@ export default {
   font-size: clamp(15px, 1.7vw, 22px);
 }
 .ticket-time {
-  color: #F6F6F6;
+  color: var(--dark-text);
   display: none;
   flex-direction: column;
   font-size: 22px;
@@ -188,7 +188,7 @@ export default {
   height: 90px;
   justify-content: center;
   align-items: center;
-  border: 2px solid #FF820C;
+  border: 2px solid var(--main-color);
   border-radius: 20px 20px 0px 20px;
   max-width: min-content;
   width: fit-content;
@@ -198,7 +198,7 @@ export default {
   transition: background-color 0.3s ease;
 }
 .dark .ticket-number {
-  border: 2px solid #FF7B51;
+  border: 2px solid var(--dark-main);
 }
 .ticket-theme {
   grid-area: ticket-theme;
